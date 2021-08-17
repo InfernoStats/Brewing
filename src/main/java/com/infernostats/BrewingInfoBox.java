@@ -6,18 +6,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class BrewingInfoBox extends InfoBox {
-    private BrewingPlugin plugin;
-    private BrewingConfig config;
     private BrewingLocation location;
     private BrewingState brewState;
     private boolean visible;
 
-    public BrewingInfoBox(BrewingPlugin plugin, BrewingConfig config,
-                          BufferedImage image, BrewingLocation location, BrewingState state)
+    public BrewingInfoBox(BufferedImage image, BrewingPlugin plugin, BrewingLocation location, BrewingState state)
     {
         super(image, plugin);
-        this.plugin = plugin;
-        this.config = config;
         this.location = location;
         this.brewState = state;
         this.visible = false;
@@ -63,3 +58,4 @@ public class BrewingInfoBox extends InfoBox {
         return this.visible;
     }
 }
+

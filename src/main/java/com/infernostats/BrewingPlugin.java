@@ -360,13 +360,11 @@ public class BrewingPlugin extends Plugin {
 
     private Object getConfigOpt(String key, Class<?> clazz)
     {
-        String profile = configManager.getRSProfileKey();
-        return configManager.getConfiguration(CONFIG_GROUP, profile, key, clazz);
+        return configManager.getRSProfileConfiguration(CONFIG_GROUP, key, clazz);
     }
 
     private void setConfigOpt(String key, Object obj)
     {
-        String profile = configManager.getRSProfileKey();
-        configManager.setConfiguration(CONFIG_GROUP, profile, key, obj);
+        configManager.setRSProfileConfiguration(CONFIG_GROUP, key, obj);
     }
 }

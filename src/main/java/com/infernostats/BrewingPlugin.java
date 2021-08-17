@@ -33,8 +33,14 @@ public class BrewingPlugin extends Plugin {
     private static final int THE_STUFF_VAT_2_VARB = 2295;
 
     private static final String CONFIG_GROUP = "BrewingConfig";
+    private static final String KELDAGRIM_STATE_KEY = "keldagrimState";
+    private static final String PHASMATYS_STATE_KEY = "phasmatysState";
+    private static final String KELDAGRIM_STUFF_KEY = "keldagrimTheStuffAdded";
+    private static final String PHASMATYS_STUFF_KEY = "phasmatysTheStuffAdded";
     private static final String KELDAGRIM_INFOBOX_KEY = "keldagrimInfobox";
     private static final String PHASMATYS_INFOBOX_KEY = "phasmatysInfobox";
+    private static final String KELDAGRIM_SERVER_KEY = "keldagrimSentToServer";
+    private static final String PHASMATYS_SERVER_KEY = "phasmatysSentToServer";
     private static final String INFOBOX_STATE_KEY = "infoboxState";
 
     @Inject
@@ -50,6 +56,9 @@ public class BrewingPlugin extends Plugin {
     private InfoBoxManager infoBoxManager;
 
     @Inject
+    private ConfigManager configManager;
+
+    @Inject
     public ClientThread clientThread;
 
     @Inject
@@ -59,27 +68,37 @@ public class BrewingPlugin extends Plugin {
     protected void startUp() {
         BufferedImage calquatKeg = itemManager.getImage(ItemID.CALQUAT_KEG);
 
-        if (config.keldagrimState() == null) {
-            config.keldagrimState(BrewingState.UNINITIALIZED);
+        if (getConfigBrewingState(BrewingLocation.Keldagrim) == null)
+        {
+            setConfigBrewingState(BrewingLocation.Keldagrim, BrewingState.UNINITIALIZED);
         }
 
-        if (config.phasmatysState() == null) {
-            config.phasmatysState(BrewingState.UNINITIALIZED);
+        if (getConfigBrewingState(BrewingLocation.Phasmatys) == null)
+        {
+            setConfigBrewingState(BrewingLocation.Phasmatys, BrewingState.UNINITIALIZED);
         }
 
-        if (config.keldagrimSentToServer() == null) {
-            config.keldagrimSentToServer(BrewingDataState.NOT_SENT);
+        if (getConfigOpt(KELDAGRIM_SERVER_KEY, BrewingDataState.class) == null)
+        {
+            setConfigOpt(KELDAGRIM_SERVER_KEY, BrewingDataState.NOT_SENT);
         }
 
-        if (config.phasmatysSentToServer() == null) {
-            config.phasmatysSentToServer(BrewingDataState.NOT_SENT);
+        if (getConfigOpt(PHASMATYS_SERVER_KEY, BrewingDataState.class) == null)
+        {
+            setConfigOpt(PHASMATYS_SERVER_KEY, BrewingDataState.NOT_SENT);
         }
 
-        keldagrimInfoBox = new BrewingInfoBox(this, config, calquatKeg, BrewingLocation.Keldagrim, config.keldagrimState());
+        keldagrimInfoBox = new BrewingInfoBox(
+                calquatKeg, this, BrewingLocation.Keldagrim,
+                getConfigBrewingState(BrewingLocation.Keldagrim)
+        );
         if (shouldDisplayInfobox(BrewingLocation.Keldagrim))
             this.addInfoBox(BrewingLocation.Keldagrim);
 
-        phasmatysInfoBox = new BrewingInfoBox(this, config, calquatKeg, BrewingLocation.Phasmatys, config.phasmatysState());
+        phasmatysInfoBox = new BrewingInfoBox(
+                calquatKeg, this, BrewingLocation.Phasmatys,
+                getConfigBrewingState(BrewingLocation.Phasmatys)
+        );
         if (shouldDisplayInfobox(BrewingLocation.Phasmatys))
             this.addInfoBox(BrewingLocation.Phasmatys);
     }
@@ -102,110 +121,93 @@ public class BrewingPlugin extends Plugin {
             return;
         }
 
-        String key = e.getKey();
+        switch (e.getKey()) {
+            case KELDAGRIM_INFOBOX_KEY:
+                if (shouldDisplayInfobox(BrewingLocation.Keldagrim)) {
+                    this.addInfoBox(BrewingLocation.Keldagrim);
+                } else {
+                    this.removeInfoBox(BrewingLocation.Keldagrim);
+                }
+                break;
+            case PHASMATYS_INFOBOX_KEY:
+                if (shouldDisplayInfobox(BrewingLocation.Phasmatys)) {
+                    this.addInfoBox(BrewingLocation.Phasmatys);
+                } else {
+                    this.removeInfoBox(BrewingLocation.Phasmatys);
+                }
+                break;
+            case INFOBOX_STATE_KEY:
+                if (shouldDisplayInfobox(BrewingLocation.Keldagrim)) {
+                    this.addInfoBox(BrewingLocation.Keldagrim);
+                } else {
+                    this.removeInfoBox(BrewingLocation.Keldagrim);
+                }
 
-        if (key.equals(KELDAGRIM_INFOBOX_KEY))
-        {
-            if (shouldDisplayInfobox(BrewingLocation.Keldagrim))
-            {
-                this.addInfoBox(BrewingLocation.Keldagrim);
-            }
-            else
-            {
-                this.removeInfoBox(BrewingLocation.Keldagrim);
-            }
-        }
-
-        else if (key.equals(PHASMATYS_INFOBOX_KEY))
-        {
-            if (shouldDisplayInfobox(BrewingLocation.Phasmatys))
-            {
-                this.addInfoBox(BrewingLocation.Phasmatys);
-            }
-            else
-            {
-                this.removeInfoBox(BrewingLocation.Phasmatys);
-            }
-        }
-
-        else if (key.equals(INFOBOX_STATE_KEY))
-        {
-            if (shouldDisplayInfobox(BrewingLocation.Keldagrim))
-            {
-                this.addInfoBox(BrewingLocation.Keldagrim);
-            }
-            else
-            {
-                this.removeInfoBox(BrewingLocation.Keldagrim);
-            }
-
-            if (shouldDisplayInfobox(BrewingLocation.Phasmatys))
-            {
-                this.addInfoBox(BrewingLocation.Phasmatys);
-            }
-            else
-            {
-                this.removeInfoBox(BrewingLocation.Phasmatys);
-            }
+                if (shouldDisplayInfobox(BrewingLocation.Phasmatys)) {
+                    this.addInfoBox(BrewingLocation.Phasmatys);
+                } else {
+                    this.removeInfoBox(BrewingLocation.Phasmatys);
+                }
+                break;
         }
     }
 
     @Subscribe
     public void onGameTick(GameTick e)
     {
-        BrewingState oldKeldagrim = config.keldagrimState();
-        BrewingState oldPhasmatys = config.phasmatysState();
+        BrewingState oldKeldagrim = getConfigBrewingState(BrewingLocation.Keldagrim);
+        BrewingState oldPhasmatys = getConfigBrewingState(BrewingLocation.Phasmatys);
 
         /* Update Fermenting Vat varbits */
-        config.keldagrimState(BrewingState.fromInt(client.getVarbitValue(BREWING_VAT_1_VARB)));
-        config.phasmatysState(BrewingState.fromInt(client.getVarbitValue(BREWING_VAT_2_VARB)));
+        setConfigBrewingState(BrewingLocation.Keldagrim, BrewingState.fromInt(client.getVarbitValue(BREWING_VAT_1_VARB)));
+        setConfigBrewingState(BrewingLocation.Phasmatys, BrewingState.fromInt(client.getVarbitValue(BREWING_VAT_2_VARB)));
 
         /* Update "The stuff" varbits */
-        config.keldagrimTheStuffAdded(client.getVarbitValue(THE_STUFF_VAT_1_VARB) == 1);
-        config.phasmatysTheStuffAdded(client.getVarbitValue(THE_STUFF_VAT_2_VARB) == 1);
+        setConfigOpt(KELDAGRIM_STUFF_KEY, client.getVarbitValue(THE_STUFF_VAT_1_VARB) == 1);
+        setConfigOpt(PHASMATYS_STUFF_KEY, client.getVarbitValue(THE_STUFF_VAT_2_VARB) == 1);
 
         /* Update info boxes with the latest brew state */
         updateInfoBox(BrewingLocation.Keldagrim);
         updateInfoBox(BrewingLocation.Phasmatys);
 
-        if (config.keldagrimState() != oldKeldagrim)
+        if (getConfigBrewingState(BrewingLocation.Keldagrim) != oldKeldagrim)
         {
-            if (oldKeldagrim.finished() && config.keldagrimState() == BrewingState.EMPTY)
+            if (oldKeldagrim.finished() && getConfigBrewingState(BrewingLocation.Keldagrim) == BrewingState.EMPTY)
             {
-                config.keldagrimSentToServer(BrewingDataState.NOT_SENT);
+                setConfigOpt(KELDAGRIM_SERVER_KEY, BrewingDataState.NOT_SENT);
             }
         }
 
-        if (config.phasmatysState() != oldPhasmatys)
+        if (getConfigBrewingState(BrewingLocation.Phasmatys) != oldPhasmatys)
         {
-            if (oldPhasmatys.finished() && config.phasmatysState() == BrewingState.EMPTY)
+            if (oldPhasmatys.finished() && getConfigBrewingState(BrewingLocation.Phasmatys) == BrewingState.EMPTY)
             {
-                config.phasmatysSentToServer(BrewingDataState.NOT_SENT);
+                setConfigOpt(PHASMATYS_SERVER_KEY, BrewingDataState.NOT_SENT);
             }
         }
 
-        if (shouldSendData(BrewingLocation.Keldagrim) && config.keldagrimState().finished())
+        if (shouldSendData(BrewingLocation.Keldagrim) && getConfigBrewingState(BrewingLocation.Keldagrim).finished())
         {
             BrewingData data = new BrewingData(
                     BrewingLocation.Keldagrim,
-                    config.keldagrimState(),
-                    config.keldagrimTheStuffAdded(),
+                    getConfigBrewingState(BrewingLocation.Keldagrim),
+                    (boolean) getConfigOpt(KELDAGRIM_STUFF_KEY, boolean.class),
                     client.getBoostedSkillLevels()[Skill.COOKING.ordinal()]
             );
             clientThread.invokeLater(() -> manager.storeEvent(data));
-            config.keldagrimSentToServer(BrewingDataState.SENT);
+            setConfigOpt(KELDAGRIM_SERVER_KEY, BrewingDataState.SENT);
         }
 
-        if (shouldSendData(BrewingLocation.Phasmatys) && config.phasmatysState().finished())
+        if (shouldSendData(BrewingLocation.Phasmatys) && getConfigBrewingState(BrewingLocation.Phasmatys).finished())
         {
             BrewingData data = new BrewingData(
                     BrewingLocation.Phasmatys,
-                    config.phasmatysState(),
-                    config.phasmatysTheStuffAdded(),
+                    getConfigBrewingState(BrewingLocation.Phasmatys),
+                    (boolean) getConfigOpt(PHASMATYS_STUFF_KEY, boolean.class),
                     client.getBoostedSkillLevels()[Skill.COOKING.ordinal()]
             );
             clientThread.invokeLater(() -> manager.storeEvent(data));
-            config.phasmatysSentToServer(BrewingDataState.SENT);
+            setConfigOpt(PHASMATYS_SERVER_KEY, BrewingDataState.SENT);
         }
     }
 
@@ -214,14 +216,14 @@ public class BrewingPlugin extends Plugin {
         switch (location)
         {
             case Keldagrim:
-                keldagrimInfoBox.setBrewState(config.keldagrimState());
+                keldagrimInfoBox.setBrewState(getConfigBrewingState(BrewingLocation.Keldagrim));
                 if (shouldDisplayInfobox(BrewingLocation.Keldagrim))
                     this.addInfoBox(BrewingLocation.Keldagrim);
                 else
                     this.removeInfoBox(BrewingLocation.Keldagrim);
                 break;
             case Phasmatys:
-                phasmatysInfoBox.setBrewState(config.phasmatysState());
+                phasmatysInfoBox.setBrewState(getConfigBrewingState(BrewingLocation.Phasmatys));
                 if (shouldDisplayInfobox(BrewingLocation.Phasmatys))
                     this.addInfoBox(BrewingLocation.Phasmatys);
                 else
@@ -242,7 +244,7 @@ public class BrewingPlugin extends Plugin {
                     case ALWAYS:
                         return true;
                     case COMPLETION:
-                        return config.keldagrimState().finished();
+                        return getConfigBrewingState(BrewingLocation.Keldagrim).finished();
                 }
             case Phasmatys:
                 if (!config.phasmatysInfobox())
@@ -252,7 +254,7 @@ public class BrewingPlugin extends Plugin {
                     case ALWAYS:
                         return true;
                     case COMPLETION:
-                        return config.phasmatysState().finished();
+                        return getConfigBrewingState(BrewingLocation.Phasmatys).finished();
                 }
             default:
                 return false;
@@ -312,9 +314,9 @@ public class BrewingPlugin extends Plugin {
         switch (location)
         {
             case Keldagrim:
-                return config.keldagrimSentToServer() == BrewingDataState.NOT_SENT;
+                return getConfigOpt(KELDAGRIM_SERVER_KEY, BrewingDataState.class) == BrewingDataState.NOT_SENT;
             case Phasmatys:
-                return config.phasmatysSentToServer() == BrewingDataState.NOT_SENT;
+                return getConfigOpt(PHASMATYS_SERVER_KEY, BrewingDataState.class) == BrewingDataState.NOT_SENT;
             default:
                 return false;
         }
@@ -330,5 +332,41 @@ public class BrewingPlugin extends Plugin {
         if (!shouldSendData())
             return;
         manager.submitToAPI(config.server());
+    }
+
+    private BrewingState getConfigBrewingState(BrewingLocation location)
+    {
+        switch (location)
+        {
+            case Keldagrim:
+                return (BrewingState) getConfigOpt(KELDAGRIM_STATE_KEY, BrewingState.class);
+            case Phasmatys:
+                return (BrewingState) getConfigOpt(PHASMATYS_STATE_KEY, BrewingState.class);
+        }
+        return BrewingState.UNINITIALIZED;
+    }
+
+    private void setConfigBrewingState(BrewingLocation location, BrewingState state)
+    {
+        if (location == BrewingLocation.Keldagrim)
+        {
+            setConfigOpt(KELDAGRIM_STATE_KEY, state);
+        }
+        else if (location == BrewingLocation.Phasmatys)
+        {
+            setConfigOpt(PHASMATYS_STATE_KEY, state);
+        }
+    }
+
+    private Object getConfigOpt(String key, Class<?> clazz)
+    {
+        String profile = configManager.getRSProfileKey();
+        return configManager.getConfiguration(CONFIG_GROUP, profile, key, clazz);
+    }
+
+    private void setConfigOpt(String key, Object obj)
+    {
+        String profile = configManager.getRSProfileKey();
+        configManager.setConfiguration(CONFIG_GROUP, profile, key, obj);
     }
 }

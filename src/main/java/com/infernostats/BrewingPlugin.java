@@ -189,7 +189,8 @@ public class BrewingPlugin extends Plugin {
             BrewingData data = new BrewingData(
                     BrewingLocation.Keldagrim,
                     config.keldagrimState(),
-                    config.keldagrimTheStuffAdded()
+                    config.keldagrimTheStuffAdded(),
+                    client.getBoostedSkillLevels()[Skill.COOKING.ordinal()]
             );
             clientThread.invokeLater(() -> manager.storeEvent(data));
             config.keldagrimSentToServer(BrewingDataState.SENT);
@@ -200,7 +201,8 @@ public class BrewingPlugin extends Plugin {
             BrewingData data = new BrewingData(
                     BrewingLocation.Phasmatys,
                     config.phasmatysState(),
-                    config.phasmatysTheStuffAdded()
+                    config.phasmatysTheStuffAdded(),
+                    client.getBoostedSkillLevels()[Skill.COOKING.ordinal()]
             );
             clientThread.invokeLater(() -> manager.storeEvent(data));
             config.phasmatysSentToServer(BrewingDataState.SENT);

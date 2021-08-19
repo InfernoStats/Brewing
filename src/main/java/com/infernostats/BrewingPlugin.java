@@ -8,6 +8,7 @@ import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
+import net.runelite.client.events.RuneScapeProfileChanged;
 import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
@@ -66,46 +67,12 @@ public class BrewingPlugin extends Plugin {
 
     @Override
     protected void startUp() {
-        BufferedImage calquatKeg = itemManager.getImage(ItemID.CALQUAT_KEG);
-
-        if (getConfigBrewingState(BrewingLocation.Keldagrim) == null)
-        {
-            setConfigBrewingState(BrewingLocation.Keldagrim, BrewingState.UNINITIALIZED);
-        }
-
-        if (getConfigBrewingState(BrewingLocation.Phasmatys) == null)
-        {
-            setConfigBrewingState(BrewingLocation.Phasmatys, BrewingState.UNINITIALIZED);
-        }
-
-        if (getConfigOpt(KELDAGRIM_SERVER_KEY, BrewingDataState.class) == null)
-        {
-            setConfigOpt(KELDAGRIM_SERVER_KEY, BrewingDataState.NOT_SENT);
-        }
-
-        if (getConfigOpt(PHASMATYS_SERVER_KEY, BrewingDataState.class) == null)
-        {
-            setConfigOpt(PHASMATYS_SERVER_KEY, BrewingDataState.NOT_SENT);
-        }
-
-        keldagrimInfoBox = new BrewingInfoBox(
-                calquatKeg, this, BrewingLocation.Keldagrim,
-                getConfigBrewingState(BrewingLocation.Keldagrim)
-        );
-        if (shouldDisplayInfobox(BrewingLocation.Keldagrim))
-            this.addInfoBox(BrewingLocation.Keldagrim);
-
-        phasmatysInfoBox = new BrewingInfoBox(
-                calquatKeg, this, BrewingLocation.Phasmatys,
-                getConfigBrewingState(BrewingLocation.Phasmatys)
-        );
-        if (shouldDisplayInfobox(BrewingLocation.Phasmatys))
-            this.addInfoBox(BrewingLocation.Phasmatys);
     }
 
     @Override
     protected void shutDown() {
-        infoBoxManager.removeIf(BrewingInfoBox.class::isInstance);
+        this.removeInfoBox(BrewingLocation.Keldagrim);
+        this.removeInfoBox(BrewingLocation.Phasmatys);
     }
 
     @Provides
@@ -153,6 +120,55 @@ public class BrewingPlugin extends Plugin {
     }
 
     @Subscribe
+    public void onRuneScapeProfileChanged(RuneScapeProfileChanged e)
+    {
+        if (client.getGameState() != GameState.LOGIN_SCREEN)
+        {
+            this.removeInfoBox(BrewingLocation.Keldagrim);
+            this.removeInfoBox(BrewingLocation.Phasmatys);
+
+            if (client.getGameState() != GameState.HOPPING)
+                return;
+        }
+
+        BufferedImage calquatKeg = itemManager.getImage(ItemID.CALQUAT_KEG);
+
+        if (getConfigBrewingState(BrewingLocation.Keldagrim) == null)
+        {
+            setConfigBrewingState(BrewingLocation.Keldagrim, BrewingState.UNINITIALIZED);
+        }
+
+        if (getConfigBrewingState(BrewingLocation.Phasmatys) == null)
+        {
+            setConfigBrewingState(BrewingLocation.Phasmatys, BrewingState.UNINITIALIZED);
+        }
+
+        if (getConfigOpt(KELDAGRIM_SERVER_KEY, BrewingDataState.class) == null)
+        {
+            setConfigOpt(KELDAGRIM_SERVER_KEY, BrewingDataState.NOT_SENT);
+        }
+
+        if (getConfigOpt(PHASMATYS_SERVER_KEY, BrewingDataState.class) == null)
+        {
+            setConfigOpt(PHASMATYS_SERVER_KEY, BrewingDataState.NOT_SENT);
+        }
+
+        keldagrimInfoBox = new BrewingInfoBox(
+                calquatKeg, this, BrewingLocation.Keldagrim,
+                getConfigBrewingState(BrewingLocation.Keldagrim)
+        );
+        if (shouldDisplayInfobox(BrewingLocation.Keldagrim))
+            this.addInfoBox(BrewingLocation.Keldagrim);
+
+        phasmatysInfoBox = new BrewingInfoBox(
+                calquatKeg, this, BrewingLocation.Phasmatys,
+                getConfigBrewingState(BrewingLocation.Phasmatys)
+        );
+        if (shouldDisplayInfobox(BrewingLocation.Phasmatys))
+            this.addInfoBox(BrewingLocation.Phasmatys);
+    }
+
+    @Subscribe
     public void onGameTick(GameTick e)
     {
         BrewingState oldKeldagrim = getConfigBrewingState(BrewingLocation.Keldagrim);
@@ -196,6 +212,7 @@ public class BrewingPlugin extends Plugin {
             );
             clientThread.invokeLater(() -> manager.storeEvent(data));
             setConfigOpt(KELDAGRIM_SERVER_KEY, BrewingDataState.SENT);
+            manager.sendMessage("Keldagrim brewing data was sent to the server.");
         }
 
         if (shouldSendData(BrewingLocation.Phasmatys) && getConfigBrewingState(BrewingLocation.Phasmatys).finished())
@@ -208,6 +225,7 @@ public class BrewingPlugin extends Plugin {
             );
             clientThread.invokeLater(() -> manager.storeEvent(data));
             setConfigOpt(PHASMATYS_SERVER_KEY, BrewingDataState.SENT);
+            manager.sendMessage("Phasmatys brewing data was sent to the server.");
         }
     }
 

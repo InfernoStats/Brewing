@@ -2,6 +2,12 @@ package com.infernostats;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.ChatMessageType;
+import net.runelite.api.events.ChatMessage;
+import net.runelite.client.chat.ChatColorType;
+import net.runelite.client.chat.ChatMessageBuilder;
+import net.runelite.client.chat.ChatMessageManager;
+import net.runelite.client.chat.QueuedMessage;
 import okhttp3.*;
 
 import javax.inject.Inject;
@@ -17,6 +23,9 @@ public class BrewingDataCollection {
 
     @Inject
     private OkHttpClient okHttpClient;
+
+    @Inject
+    private ChatMessageManager chatMessageManager;
 
     private List<Object> data = new ArrayList<>();
 
@@ -71,5 +80,18 @@ public class BrewingDataCollection {
                 response.close();
             }
         });
+    }
+
+    public void sendMessage(String message)
+    {
+        final ChatMessageBuilder chatMessage = new ChatMessageBuilder()
+                .append(ChatColorType.HIGHLIGHT)
+                .append(message)
+                .append(ChatColorType.NORMAL);
+
+        chatMessageManager.queue(QueuedMessage.builder()
+                .type(ChatMessageType.CONSOLE)
+                .runeLiteFormattedMessage(chatMessage.build())
+                .build());
     }
 }

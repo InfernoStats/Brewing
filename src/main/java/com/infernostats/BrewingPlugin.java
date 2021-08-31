@@ -67,12 +67,25 @@ public class BrewingPlugin extends Plugin {
 
     @Override
     protected void startUp() {
+        BufferedImage calquatKeg = itemManager.getImage(ItemID.CALQUAT_KEG);
+
+        keldagrimInfoBox = new BrewingInfoBox(
+                calquatKeg, this, BrewingLocation.Keldagrim,
+                BrewingState.UNINITIALIZED
+        );
+
+        phasmatysInfoBox = new BrewingInfoBox(
+                calquatKeg, this, BrewingLocation.Phasmatys,
+                BrewingState.UNINITIALIZED
+        );
     }
 
     @Override
     protected void shutDown() {
         this.removeInfoBox(BrewingLocation.Keldagrim);
         this.removeInfoBox(BrewingLocation.Phasmatys);
+
+        infoBoxManager.removeIf(BrewingInfoBox.class::isInstance);
     }
 
     @Provides
@@ -122,16 +135,11 @@ public class BrewingPlugin extends Plugin {
     @Subscribe
     public void onRuneScapeProfileChanged(RuneScapeProfileChanged e)
     {
-        if (client.getGameState() != GameState.LOGIN_SCREEN)
-        {
-            this.removeInfoBox(BrewingLocation.Keldagrim);
-            this.removeInfoBox(BrewingLocation.Phasmatys);
+        if (client.getGameState() != GameState.LOGGED_IN || client.getGameState() != GameState.HOPPING)
+            return;
 
-            if (client.getGameState() != GameState.HOPPING)
-                return;
-        }
-
-        BufferedImage calquatKeg = itemManager.getImage(ItemID.CALQUAT_KEG);
+        this.removeInfoBox(BrewingLocation.Keldagrim);
+        this.removeInfoBox(BrewingLocation.Phasmatys);
 
         if (getConfigBrewingState(BrewingLocation.Keldagrim) == null)
         {
@@ -153,17 +161,9 @@ public class BrewingPlugin extends Plugin {
             setConfigOpt(PHASMATYS_SERVER_KEY, BrewingDataState.NOT_SENT);
         }
 
-        keldagrimInfoBox = new BrewingInfoBox(
-                calquatKeg, this, BrewingLocation.Keldagrim,
-                getConfigBrewingState(BrewingLocation.Keldagrim)
-        );
         if (shouldDisplayInfobox(BrewingLocation.Keldagrim))
             this.addInfoBox(BrewingLocation.Keldagrim);
 
-        phasmatysInfoBox = new BrewingInfoBox(
-                calquatKeg, this, BrewingLocation.Phasmatys,
-                getConfigBrewingState(BrewingLocation.Phasmatys)
-        );
         if (shouldDisplayInfobox(BrewingLocation.Phasmatys))
             this.addInfoBox(BrewingLocation.Phasmatys);
     }
@@ -357,9 +357,15 @@ public class BrewingPlugin extends Plugin {
         switch (location)
         {
             case Keldagrim:
-                return (BrewingState) getConfigOpt(KELDAGRIM_STATE_KEY, BrewingState.class);
+                Object keldagrimState = getConfigOpt(KELDAGRIM_STATE_KEY, BrewingState.class);
+                if (keldagrimState == null)
+                    break;
+                return (BrewingState) keldagrimState;
             case Phasmatys:
-                return (BrewingState) getConfigOpt(PHASMATYS_STATE_KEY, BrewingState.class);
+                Object phasmatysState = getConfigOpt(PHASMATYS_STATE_KEY, BrewingState.class);
+                if (phasmatysState == null)
+                    break;
+                return (BrewingState) phasmatysState;
         }
         return BrewingState.UNINITIALIZED;
     }

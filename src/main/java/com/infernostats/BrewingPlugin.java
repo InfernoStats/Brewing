@@ -261,7 +261,10 @@ public class BrewingPlugin extends Plugin {
                 {
                     case ALWAYS:
                         return true;
-                    case COMPLETION:
+                    case PREP_OR_COMPLETED:
+                        BrewingState state = getConfigBrewingState(BrewingLocation.Keldagrim);
+                        return state.prepUnfinished() || state.finished();
+                    case COMPLETED:
                         return getConfigBrewingState(BrewingLocation.Keldagrim).finished();
                 }
             case Phasmatys:
@@ -271,7 +274,10 @@ public class BrewingPlugin extends Plugin {
                 {
                     case ALWAYS:
                         return true;
-                    case COMPLETION:
+                    case PREP_OR_COMPLETED:
+                        BrewingState state = getConfigBrewingState(BrewingLocation.Phasmatys);
+                        return state.prepUnfinished() || state.finished();
+                    case COMPLETED:
                         return getConfigBrewingState(BrewingLocation.Phasmatys).finished();
                 }
             default:

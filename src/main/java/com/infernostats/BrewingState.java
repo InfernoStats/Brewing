@@ -133,6 +133,24 @@ public enum BrewingState {
         }, fromInt(this.value));
     }
 
+    public boolean prepUnfinished(){
+        return ArrayUtils.contains(new BrewingState[]{
+                WATER,
+                BARLEY,
+                HAMMERSTONE_HOPS,
+                ASGARNIAN_HOPS,
+                HARRALANDER,
+                YANILLIAN_HOPS,
+                KRANDORIAN_HOPS,
+                MUSHROOMS,
+                OAK_ROOTS,
+                CHOCOLATE_DUST,
+                WILDBLOOD_HOPS,
+                APPLE_MUSH,
+                KELDA_HOPS
+        }, fromInt(this.value));
+    }
+
     @Override
     public String toString()
     {

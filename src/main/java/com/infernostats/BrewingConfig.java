@@ -7,13 +7,9 @@ import net.runelite.client.config.ConfigSection;
 
 @ConfigGroup("BrewingConfig")
 public interface BrewingConfig extends Config {
-    enum InfoBoxState {
-        COMPLETION, ALWAYS;
-    }
-
     @ConfigSection(
             name = "Infobox",
-            description = "Infobox",
+            description = "Settings relating to infoboxes",
             position = 0
     )
     String infobox = "infobox";
@@ -22,7 +18,7 @@ public interface BrewingConfig extends Config {
             position = 0,
             keyName = "keldagrimInfobox",
             name = "Keldagrim Infobox",
-            description = "Keldagrim Infobox",
+            description = "Configures whether to show the Keldagrim infobox.",
             section = infobox
     )
     default boolean keldagrimInfobox() {
@@ -33,7 +29,7 @@ public interface BrewingConfig extends Config {
             position = 1,
             keyName = "phasmatysInfobox",
             name = "Phasmatys Infobox",
-            description = "Phasmatys Infobox",
+            description = "Configures whether to show the Phasmatys infobox.",
             section = infobox
     )
     default boolean phasmatysInfobox() {
@@ -44,16 +40,16 @@ public interface BrewingConfig extends Config {
             position = 2,
             keyName = "infoboxState",
             name = "Infobox State",
-            description = "Infobox State",
+            description = "Configures when to show the infoboxes",
             section = infobox
     )
     default InfoBoxState infoboxState() {
-        return InfoBoxState.COMPLETION;
+        return InfoBoxState.PREP_OR_COMPLETED;
     }
 
     @ConfigSection(
             name = "Server",
-            description = "Server",
+            description = "Settings relating to the server",
             position = 1
     )
     String server = "server";
@@ -62,7 +58,7 @@ public interface BrewingConfig extends Config {
             position = 0,
             keyName = "sendServerData",
             name = "Send Data to Server",
-            description = "Send Brew Data to Server",
+            description = "Configures whether to send brewing data to server.",
             section = server
     )
     default boolean enableServer() {
@@ -73,7 +69,7 @@ public interface BrewingConfig extends Config {
             position = 1,
             keyName = "server",
             name = "Server URL",
-            description = "Server URL",
+            description = "Configures which URL to send the brewing data to.",
             section = server
     )
     default String server() {

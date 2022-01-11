@@ -40,6 +40,8 @@ public class BrewingInfoBox extends InfoBox {
             else
                 return Color.GREEN;
         }
+        else if (this.brewState.prepUnfinished())
+            return Color.YELLOW;
         return Color.WHITE;
     }
 

@@ -106,7 +106,25 @@ public enum BrewingState {
         return Optional.ofNullable(map.get(value)).orElse(UNKNOWN);
     }
 
-    public boolean finished() {
+	public boolean isPartial(){
+		return ArrayUtils.contains(new BrewingState[]{
+				WATER,
+				BARLEY,
+				HAMMERSTONE_HOPS,
+				ASGARNIAN_HOPS,
+				HARRALANDER,
+				YANILLIAN_HOPS,
+				KRANDORIAN_HOPS,
+				MUSHROOMS,
+				OAK_ROOTS,
+				CHOCOLATE_DUST,
+				WILDBLOOD_HOPS,
+				APPLE_MUSH,
+				KELDA_HOPS
+		}, fromInt(this.value));
+	}
+
+    public boolean isFinished() {
         return ArrayUtils.contains(new BrewingState[]{
                 DWARVEN_STOUT,
                 MATURE_DWARVEN_STOUT,

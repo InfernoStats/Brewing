@@ -1,16 +1,20 @@
 package com.infernostats;
 
+import lombok.Getter;
+import lombok.Setter;
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+@Getter
+@Setter
 public class BrewingInfoBox extends InfoBox {
-    private BrewingLocation location;
+    private String location;
     private BrewingState brewState;
     private boolean visible;
 
-    public BrewingInfoBox(BufferedImage image, BrewingPlugin plugin, BrewingLocation location, BrewingState state)
+    public BrewingInfoBox(BufferedImage image, BrewingPlugin plugin, String location, BrewingState state)
     {
         super(image, plugin);
         this.location = location;
@@ -21,41 +25,30 @@ public class BrewingInfoBox extends InfoBox {
     @Override
     public String getText()
     {
-        return this.location.toString().substring(0, 1);
+        return this.location.substring(0, 1);
     }
 
     @Override
     public String getTooltip()
     {
-        return this.location.toString() + " - " + brewState.toString();
+        return this.location + " - " + brewState.toString();
     }
 
     @Override
     public Color getTextColor()
     {
-        if (this.brewState.finished())
+        if (this.brewState.isFinished())
         {
             if (this.brewState == BrewingState.BAD_ALE)
                 return Color.RED;
             else
                 return Color.GREEN;
         }
+        else if (this.brewState.isPartial())
+		{
+			return Color.YELLOW;
+		}
         return Color.WHITE;
-    }
-
-    public void setBrewState(BrewingState state)
-    {
-        this.brewState = state;
-    }
-
-    public void setVisible(boolean isVisible)
-    {
-        this.visible = isVisible;
-    }
-
-    public boolean isVisible()
-    {
-        return this.visible;
     }
 }
 

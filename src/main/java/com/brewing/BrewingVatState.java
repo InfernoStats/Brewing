@@ -1,8 +1,13 @@
 package com.brewing;
 
 import com.google.common.collect.Sets;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -95,7 +100,17 @@ public enum BrewingVatState {
 	UNKNOWN(-1),
 	UNINITIALIZED(-2);
 
-	private static final Set<BrewingVatState> PARTIAL_STATES = Sets.immutableEnumSet(
+	private static final Map<Integer, BrewingVatState> map;
+	static {
+		map = Arrays.stream(values())
+				.collect(Collectors.toMap(e -> e.value, e -> e));
+	}
+
+	public static BrewingVatState fromInt(int value) {
+		return Optional.ofNullable(map.get(value)).orElse(UNKNOWN);
+	}
+
+	public static final Set<BrewingVatState> PARTIAL_STATES = Sets.immutableEnumSet(
 			WATER,
 			BARLEY,
 			HAMMERSTONE_HOPS,
@@ -111,12 +126,12 @@ public enum BrewingVatState {
 			KELDA_HOPS
 	);
 
-	private static final Set<BrewingVatState> FAILURE_STATES = Sets.immutableEnumSet(
+	public static final Set<BrewingVatState> FAILURE_STATES = Sets.immutableEnumSet(
 			BAD_ALE,
 			BAD_CIDER
 	);
 
-	private static final Set<BrewingVatState> COMPLETE_NORMAL_STATES = Sets.immutableEnumSet(
+	public static final Set<BrewingVatState> COMPLETE_NORMAL_STATES = Sets.immutableEnumSet(
 			DWARVEN_STOUT,
 			ASGARNIAN_ALE,
 			GREENMANS_ALE,
@@ -130,7 +145,7 @@ public enum BrewingVatState {
 			KELDA_STOUT
 	);
 
-	private static final Set<BrewingVatState> COMPLETE_MATURE_STATES = Sets.immutableEnumSet(
+	public static final Set<BrewingVatState> COMPLETE_MATURE_STATES = Sets.immutableEnumSet(
 			MATURE_DWARVEN_STOUT,
 			MATURE_ASGARNIAN_ALE,
 			MATURE_GREENMANS_ALE,
@@ -145,29 +160,9 @@ public enum BrewingVatState {
 
 	private final int value;
 
-	public static boolean isPartial(int value) // does this need a param or no?
-	{
-        return Stream.of(BrewingVatState.values()[value]).anyMatch(PARTIAL_STATES::contains);
-	}
-
-	public static boolean isCompleteNormal(int value) // does this need a param or no?
-    {
-        return Stream.of(BrewingVatState.values()[value]).anyMatch(COMPLETE_NORMAL_STATES::contains);
-	}
-
-	public static boolean isCompleteMature(int value) // does this need a param or no?
-    {
-		return Stream.of(BrewingVatState.values()[value]).anyMatch(COMPLETE_MATURE_STATES::contains);
-	}
-
-	public static boolean isBad(int value) // does this need a param or no?
-    {
-		return Stream.of(BrewingVatState.values()[value]).anyMatch(FAILURE_STATES::contains);
-	}
-
 	public static String toString(int value)
 	{
-		switch (BrewingVatState.values()[value])
+		switch (BrewingVatState.fromInt(value))
 		{
 			case EMPTY:
 				return "Empty";

@@ -1,11 +1,15 @@
 package com.brewing;
 
 import com.google.inject.Provides;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.stream.Stream;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
 import net.runelite.api.ItemID;
+import net.runelite.api.events.GameTick;
 import net.runelite.api.events.VarbitChanged;
 import static net.runelite.api.MenuAction.RUNELITE_OVERLAY_CONFIG;
 import net.runelite.client.config.ConfigManager;
@@ -57,66 +61,91 @@ public class BrewingPlugin extends Plugin {
 	private static final int PORT_PHASMATYS_STUFF_VARBIT = 2295;
 	private static final int PORT_PHASMATYS_BARREL_VARBIT = 739;
 
-	private final BufferedImage VAT_IMAGE = ImageUtil.loadImageResource(getClass(), "/vat.png");
-	private final BufferedImage BARREL_IMAGE = ImageUtil.loadImageResource(getClass(), "/barrel.png");
-	private final BufferedImage THE_STUFF_IMAGE = itemManager.getImage(ItemID.THE_STUFF);
+	private boolean infoboxInit = false; //how can i make them update withv arbs instantly on client thread?
+
+	private static final BufferedImage VAT_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "./vat.png");
+	private static final BufferedImage BARREL_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "./barrel.png");
+	//private final BufferedImage THE_STUFF_IMAGE = itemManager.getImage(ItemID.THE_STUFF);
 
 	@Provides
-	BrewingConfig provideConfig(ConfigManager configManager)
-	{
+	BrewingConfig provideConfig(ConfigManager configManager) {
 		return configManager.getConfig(BrewingConfig.class);
 	}
 
 	@Override
-	protected void startUp() throws Exception
-	{
-		OverlayMenuEntry menuEntry = new OverlayMenuEntry(RUNELITE_OVERLAY_CONFIG, OPTION_CONFIGURE, "Brewing overlay");
+	protected void startUp() throws Exception {
+		//OverlayMenuEntry menuEntry = new OverlayMenuEntry(RUNELITE_OVERLAY_CONFIG, OPTION_CONFIGURE, "Brewing overlay"); //WHAT DOES OVERLAY DO
 
-		brewingOverlay.getMenuEntries().add(menuEntry);
-		overlayManager.add(brewingOverlay);
-
-		addInfoBoxes();
+		//brewingOverlay.getMenuEntries().add(menuEntry);
+		//overlayManager.add(brewingOverlay);
 	}
 
 	@Override
-	protected void shutDown() throws Exception
-    {
-        brewingOverlay.getMenuEntries().clear();
-        overlayManager.remove(brewingOverlay);
+	protected void shutDown() throws Exception {
+		brewingOverlay.getMenuEntries().clear();
+		overlayManager.remove(brewingOverlay);
 		removeInfoBoxes();
 	}
 
 	@Subscribe
-	public void onConfigChanged(ConfigChanged e)
-	{
-		if (!e.getGroup().equals(CONFIG_GROUP))
-		{
+	public void onConfigChanged(ConfigChanged e) {
+		if (!e.getGroup().equals(CONFIG_GROUP)) {
 			return;
 		}
-
-		removeInfoBoxes();
+		infoboxInit = false;
 	}
 
-	public void onVarbitChanged(VarbitChanged varbitChanged)
-	{
+	@Subscribe
+	public void onVarbitChanged(VarbitChanged varbitChanged) {
 		int var = varbitChanged.getVarbitId();
 
-		if(var == KELDAGRIM_VAT_VARBIT || var == PORT_PHASMATYS_VAT_VARBIT ||
-			var == KELDAGRIM_STUFF_VARBIT || var == PORT_PHASMATYS_STUFF_VARBIT ||
-			var == KELDAGRIM_BARREL_VARBIT || var == PORT_PHASMATYS_BARREL_VARBIT)
-		{
+		if (var == KELDAGRIM_VAT_VARBIT || var == PORT_PHASMATYS_VAT_VARBIT ||
+				var == KELDAGRIM_STUFF_VARBIT || var == PORT_PHASMATYS_STUFF_VARBIT ||
+				var == KELDAGRIM_BARREL_VARBIT || var == PORT_PHASMATYS_BARREL_VARBIT) {
 			removeInfoBoxes();
 			addInfoBoxes();
 		}
 
 	}
 
+	@Subscribe
+	public void onGameTick(GameTick gameTick)
+	{
+		if(!infoboxInit)
+		{
+			removeInfoBoxes();
+			addInfoBoxes();
+			infoboxInit = true;
+		}
+	}
+
+	public Color getVatStateColor(int value)
+	{
+		if (Stream.of(BrewingVatState.fromInt(value)).anyMatch(BrewingVatState.FAILURE_STATES::contains))
+		{
+			return Color.RED;
+		}
+		else if (Stream.of(BrewingVatState.fromInt(value)).anyMatch(BrewingVatState.COMPLETE_MATURE_STATES::contains))
+		{
+			return Color.BLUE;
+		}
+		else if (Stream.of(BrewingVatState.fromInt(value)).anyMatch(BrewingVatState.COMPLETE_NORMAL_STATES::contains))
+		{
+			return Color.GREEN;
+		}
+		else if (Stream.of(BrewingVatState.fromInt(value)).anyMatch(BrewingVatState.PARTIAL_STATES::contains))
+		{
+			return Color.YELLOW;
+		}
+		return Color.WHITE;
+	}
+
 	private void addInfoBoxes()
 	{
-		infoBoxManager.addInfoBox(new BrewingVat(KELDAGRIM_NAME, KELDAGRIM_VAT_VARBIT, KELDAGRIM_STUFF_VARBIT, VAT_IMAGE, this, config));
-		infoBoxManager.addInfoBox(new BrewingVat(PORT_PHASMATYS_NAME, PORT_PHASMATYS_VAT_VARBIT, PORT_PHASMATYS_STUFF_VARBIT, VAT_IMAGE, this, config));
-		infoBoxManager.addInfoBox(new BrewingBarrel(PORT_PHASMATYS_NAME, PORT_PHASMATYS_BARREL_VARBIT, BARREL_IMAGE, this, config));
-		infoBoxManager.addInfoBox(new BrewingBarrel(PORT_PHASMATYS_NAME, PORT_PHASMATYS_BARREL_VARBIT, BARREL_IMAGE, this, config));
+		infoBoxManager.addInfoBox(new BrewingVat(KELDAGRIM_NAME, client.getVarbitValue(KELDAGRIM_VAT_VARBIT), client.getVarbitValue(KELDAGRIM_STUFF_VARBIT), VAT_IMAGE, this, config));
+		infoBoxManager.addInfoBox(new BrewingVat(PORT_PHASMATYS_NAME, client.getVarbitValue(PORT_PHASMATYS_VAT_VARBIT), client.getVarbitValue(PORT_PHASMATYS_STUFF_VARBIT), VAT_IMAGE, this, config));
+		infoBoxManager.addInfoBox(new BrewingBarrel(KELDAGRIM_NAME, client.getVarbitValue(KELDAGRIM_BARREL_VARBIT), BARREL_IMAGE, this, config));
+		infoBoxManager.addInfoBox(new BrewingBarrel(PORT_PHASMATYS_NAME, client.getVarbitValue(PORT_PHASMATYS_BARREL_VARBIT), BARREL_IMAGE, this, config));
 	}
 
 	private void removeInfoBoxes()

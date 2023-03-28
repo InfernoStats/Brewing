@@ -2,6 +2,8 @@ package com.brewing;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.stream.Stream;
+
 import net.runelite.client.ui.overlay.infobox.InfoBox;
 import net.runelite.client.ui.overlay.infobox.InfoBoxPriority;
 
@@ -13,11 +15,11 @@ public class BrewingVat extends InfoBox
 	private final BrewingPlugin plugin;
 	private final BrewingConfig config;
 
-	BrewingVat(String location, int vat_varbit, int stuff_varbit, BufferedImage image, BrewingPlugin plugin, BrewingConfig config)
+	BrewingVat(String location, int vat_val, int stuff_val, BufferedImage image, BrewingPlugin plugin, BrewingConfig config)
 	{
 		super(image, plugin);
-		this.the_stuff = stuff_varbit;
-		this.vat = vat_varbit;
+		this.the_stuff = stuff_val;
+		this.vat = vat_val;
 		this.location = location;
 		this.plugin = plugin;
 		this.config = config;
@@ -39,29 +41,18 @@ public class BrewingVat extends InfoBox
 	@Override
 	public Color getTextColor()
 	{
-		if (BrewingVatState.isBad(vat))
-		{
-			return Color.RED;
-		}
-		else if (BrewingVatState.isCompleteMature(vat))
-		{
-			return Color.BLUE;
-		}
-		else if (BrewingVatState.isCompleteNormal(vat)) {
-			return Color.GREEN;
-		}
-        else if (BrewingVatState.isPartial(vat))
-		{
-			return Color.YELLOW;
-		}
-        return Color.WHITE;
-}
+		return plugin.getVatStateColor(vat);
+	}
 
 	@Override
 	public boolean render()
 	{
-		return config.displayVats() == BrewingConfig.DisplayMode.BOTH ||
+		// This checks user settings mode and current vat conditions
+		return (config.displayVats() == BrewingConfig.DisplayMode.BOTH ||
 				(location == plugin.KELDAGRIM_NAME && config.displayVats() == BrewingConfig.DisplayMode.KELDAGRIM) ||
-				(location == plugin.PORT_PHASMATYS_NAME && config.displayVats() == BrewingConfig.DisplayMode.PORT_PHASMATYS);
+				(location == plugin.PORT_PHASMATYS_NAME && config.displayVats() == BrewingConfig.DisplayMode.PORT_PHASMATYS)) &&
+				 (config.vatDisplayCond() == BrewingConfig.VatState.ALWAYS ||
+						 (vat != BrewingVatState.EMPTY.getValue() && config.vatDisplayCond() == BrewingConfig.VatState.PARTIAL_AND_COMPLETION) ||
+						 (Stream.of(BrewingVatState.fromInt(vat)).anyMatch(BrewingVatState.COMPLETE_NORMAL_STATES::contains) || Stream.of(BrewingVatState.fromInt(vat)).anyMatch(BrewingVatState.COMPLETE_MATURE_STATES::contains)) && config.vatDisplayCond() == BrewingConfig.VatState.COMPLETION);
 	}
 }

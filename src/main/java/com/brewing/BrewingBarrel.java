@@ -52,7 +52,7 @@ public class BrewingBarrel extends InfoBox
 	}
 
 	@Override
-	public boolean render()
+	public boolean render() // check state configs too
 	{
 		return config.displayBarrels() == BrewingConfig.DisplayMode.BOTH ||
 				(location == plugin.KELDAGRIM_NAME && config.displayBarrels() == BrewingConfig.DisplayMode.KELDAGRIM) ||

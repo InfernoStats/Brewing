@@ -11,11 +11,9 @@ import net.runelite.client.Notifier;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
-import net.runelite.client.game.ItemManager;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
-import net.runelite.client.ui.overlay.OverlayManager;
 import net.runelite.client.util.ImageUtil;
 
 @Slf4j
@@ -31,13 +29,7 @@ public class BrewingPlugin extends Plugin {
 	private Client client;
 
 	@Inject
-	private ItemManager itemManager;
-
-	@Inject
 	private InfoBoxManager infoBoxManager;
-
-	@Inject
-	private OverlayManager overlayManager;
 
 	@Inject
 	private Notifier notifier;
@@ -91,7 +83,7 @@ public class BrewingPlugin extends Plugin {
 				(var == KELDAGRIM_VAT_VARBIT || var == PORT_PHASMATYS_VAT_VARBIT) &&
 				(BrewingVatState.isCompletedNormal(varbitChanged.getValue()) || BrewingVatState.isCompletedMature(varbitChanged.getValue())))
 		{
-			notifier.notify(BrewingVatState.toString(varbitChanged.getValue()) + " completed in " + (var == KELDAGRIM_VAT_VARBIT ? "Keldagrim" : "Port Phasmatys") + " vat.");
+			notifier.notify(BrewingVatState.toString(varbitChanged.getValue()) + " completed in the " + (var == KELDAGRIM_VAT_VARBIT ? "Keldagrim" : "Port Phasmatys") + " vat.");
 		}
 
 		if(var == KELDAGRIM_VAT_VARBIT || var == PORT_PHASMATYS_VAT_VARBIT ||

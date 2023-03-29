@@ -457,7 +457,7 @@ public enum BrewingBarrelState {
 
 	public static String toString(int value)
 	{
-		switch (BrewingBarrelState.fromInt(value)) // Can this just be modulo'd somehow?
+		switch (BrewingBarrelState.fromInt(value))
 		{
 			case EMPTY:
 				return "Empty";

@@ -46,30 +46,30 @@ public interface BrewingConfig extends Config {
 	}
 
 	@ConfigItem(
-			keyName = "barrelDisplay",
-			name = "Display Barrels",
-			description = "Configures which barrels to display",
-			position = 3
+		keyName = "barrelDisplay",
+		name = "Display Barrels",
+		description = "Configures which barrels to display",
+		position = 3
 	)
 	default DisplayMode displayBarrels() {
 		return DisplayMode.BOTH;
 	}
 
 	@ConfigItem(
-			keyName = "barrelDisplaySetting",
-			name = "Barrel Display Condition",
-			description = "Configures when barrels be displayed",
-			position = 4
+		keyName = "barrelDisplaySetting",
+		name = "Barrel Display Condition",
+		description = "Configures when barrels be displayed",
+		position = 4
 	)
 	default BarrelState barrelDisplayCond() {
 		return BarrelState.NOT_EMPTY;
 	}
 
 	@ConfigItem(
-			keyName = "notifySetting",
-			name = "Notify On Completion",
-			description = "Configures if to notify when a vat is done",
-			position = 5
+		keyName = "notifySetting",
+		name = "Notify On Completion",
+		description = "Configures if to notify when a vat is done",
+		position = 5
 	)
 	default boolean notifyOnCompletion() {
 		return false;

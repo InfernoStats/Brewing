@@ -58,17 +58,36 @@ public class BrewingBarrel extends InfoBox
 		return canDisplayBarrel() && canDisplayBarrelCond();
 	}
 
-	private boolean canDisplayBarrel()
-	{
-		return config.displayBarrels() == BrewingConfig.DisplayMode.BOTH ||
-				(location == plugin.KELDAGRIM_NAME && config.displayBarrels() == BrewingConfig.DisplayMode.KELDAGRIM) ||
-				(location == plugin.PORT_PHASMATYS_NAME && config.displayBarrels() == BrewingConfig.DisplayMode.PORT_PHASMATYS);
+	private boolean canDisplayBarrel() {
+		if (config.displayBarrels() == BrewingConfig.DisplayMode.BOTH)
+		{
+			return true;
+		}
+		else if (location == plugin.KELDAGRIM_NAME && config.displayBarrels() == BrewingConfig.DisplayMode.KELDAGRIM)
+		{
+			return true;
+		}
+		else if (location == plugin.PORT_PHASMATYS_NAME && config.displayBarrels() == BrewingConfig.DisplayMode.PORT_PHASMATYS)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	private boolean canDisplayBarrelCond()
 	{
-		return config.barrelDisplayCond() == BrewingConfig.BarrelState.ALWAYS ||
-				(barrel != BrewingBarrelState.EMPTY.getValue() && config.barrelDisplayCond() == BrewingConfig.BarrelState.NOT_EMPTY) ||
-				(BrewingBarrelState.isFull(barrel) && config.barrelDisplayCond() == BrewingConfig.BarrelState.FULL);
+		if(config.barrelDisplayCond() == BrewingConfig.BarrelState.ALWAYS)
+		{
+			return true;
+		}
+		else if(barrel != BrewingBarrelState.EMPTY.getValue() && config.barrelDisplayCond() == BrewingConfig.BarrelState.NOT_EMPTY)
+		{
+			return true;
+		}
+		else if(BrewingBarrelState.isFull(barrel) && config.barrelDisplayCond() == BrewingConfig.BarrelState.FULL)
+		{
+			return true;
+		}
+		return false;
 	}
 }

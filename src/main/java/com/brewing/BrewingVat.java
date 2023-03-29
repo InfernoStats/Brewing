@@ -64,15 +64,35 @@ public class BrewingVat extends InfoBox
 
 	private boolean canDisplayVat()
 	{
-		return config.displayVats() == BrewingConfig.DisplayMode.BOTH ||
-				(location == plugin.KELDAGRIM_NAME && config.displayVats() == BrewingConfig.DisplayMode.KELDAGRIM) ||
-				(location == plugin.PORT_PHASMATYS_NAME && config.displayVats() == BrewingConfig.DisplayMode.PORT_PHASMATYS);
+		if(config.displayVats() == BrewingConfig.DisplayMode.BOTH)
+		{
+			return true;
+		}
+		else if(location == plugin.KELDAGRIM_NAME && config.displayVats() == BrewingConfig.DisplayMode.KELDAGRIM)
+		{
+			return true;
+		}
+		else if(location == plugin.PORT_PHASMATYS_NAME && config.displayVats() == BrewingConfig.DisplayMode.PORT_PHASMATYS)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	private boolean canDisplayVatCond()
 	{
-		return config.vatDisplayCond() == BrewingConfig.VatState.ALWAYS ||
-				(vat != BrewingVatState.EMPTY.getValue() && config.vatDisplayCond() == BrewingConfig.VatState.ANY_CONTENTS) ||
-				((BrewingVatState.isBad(vat) || BrewingVatState.isCompletedNormal(vat) || BrewingVatState.isCompletedMature(vat)) && config.vatDisplayCond() == BrewingConfig.VatState.COMPLETION);
+		if(config.vatDisplayCond() == BrewingConfig.VatState.ALWAYS)
+		{
+			return true;
+		}
+		else if(vat != BrewingVatState.EMPTY.getValue() && config.vatDisplayCond() == BrewingConfig.VatState.ANY_CONTENTS)
+		{
+			return true;
+		}
+		else if((BrewingVatState.isBad(vat) || BrewingVatState.isCompletedNormal(vat) || BrewingVatState.isCompletedMature(vat)) && config.vatDisplayCond() == BrewingConfig.VatState.COMPLETION)
+		{
+			return true;
+		}
+		return false;
 	}
 }

@@ -65,6 +65,7 @@ public class BrewingPlugin extends Plugin {
 	@Override
 	protected void shutDown() throws Exception {
 		removeInfoBoxes();
+		infoboxInit = false;
 	}
 
 	@Subscribe

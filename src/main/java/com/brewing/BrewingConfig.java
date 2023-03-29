@@ -16,7 +16,7 @@ public interface BrewingConfig extends Config {
 	enum VatState {
 		ALWAYS,
 		COMPLETION,
-		PARTIAL_AND_COMPLETION
+		ANY_CONTENTS
 	}
 
 	enum BarrelState {

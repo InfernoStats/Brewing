@@ -8,15 +8,13 @@ import net.runelite.client.ui.overlay.infobox.InfoBoxPriority;
 public class BrewingVat extends InfoBox
 {
 	private final String location;
-	private final int the_stuff;
 	private final int vat;
 	private final BrewingPlugin plugin;
 	private final BrewingConfig config;
 
-	BrewingVat(String location, int vat_val, int stuff_val, BufferedImage image, BrewingPlugin plugin, BrewingConfig config)
+	BrewingVat(String location, int vat_val, BufferedImage image, BrewingPlugin plugin, BrewingConfig config)
 	{
 		super(image, plugin);
-		this.the_stuff = stuff_val;
 		this.vat = vat_val;
 		this.location = location;
 		this.plugin = plugin;
@@ -74,7 +72,7 @@ public class BrewingVat extends InfoBox
 	private boolean canDisplayVatCond()
 	{
 		return config.vatDisplayCond() == BrewingConfig.VatState.ALWAYS ||
-				(vat != BrewingVatState.EMPTY.getValue() && config.vatDisplayCond() == BrewingConfig.VatState.PARTIAL_AND_COMPLETION) ||
+				(vat != BrewingVatState.EMPTY.getValue() && config.vatDisplayCond() == BrewingConfig.VatState.ANY_CONTENTS) ||
 				((BrewingVatState.isBad(vat) || BrewingVatState.isCompletedNormal(vat) || BrewingVatState.isCompletedMature(vat)) && config.vatDisplayCond() == BrewingConfig.VatState.COMPLETION);
 	}
 }

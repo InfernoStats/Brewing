@@ -108,23 +108,11 @@ public class BrewingPlugin extends Plugin {
 
 	private void addInfoBoxes()
 	{
-		if(client.getVarbitValue(KELDAGRIM_STUFF_VARBIT) == 1)
-		{
-			infoBoxManager.addInfoBox(new BrewingVat(KELDAGRIM_NAME, client.getVarbitValue(KELDAGRIM_VAT_VARBIT), client.getVarbitValue(KELDAGRIM_STUFF_VARBIT), THE_STUFF_VAT_IMAGE, this, config));
-		}
-		else
-		{
-			infoBoxManager.addInfoBox(new BrewingVat(KELDAGRIM_NAME, client.getVarbitValue(KELDAGRIM_VAT_VARBIT), client.getVarbitValue(KELDAGRIM_STUFF_VARBIT), VAT_IMAGE, this, config));
+		BufferedImage KELDAGRIM_VAT_IMAGE = client.getVarbitValue(KELDAGRIM_STUFF_VARBIT) == 1 ? THE_STUFF_VAT_IMAGE : VAT_IMAGE;
+		BufferedImage PORT_PHASMATYS_VAT_IMAGE = client.getVarbitValue(PORT_PHASMATYS_STUFF_VARBIT) == 1 ? THE_STUFF_VAT_IMAGE : VAT_IMAGE;
 
-		}
-		if(client.getVarbitValue(PORT_PHASMATYS_STUFF_VARBIT) == 1)
-		{
-			infoBoxManager.addInfoBox(new BrewingVat(PORT_PHASMATYS_NAME, client.getVarbitValue(PORT_PHASMATYS_VAT_VARBIT), client.getVarbitValue(PORT_PHASMATYS_STUFF_VARBIT), THE_STUFF_VAT_IMAGE, this, config));
-		}
-		else
-		{
-			infoBoxManager.addInfoBox(new BrewingVat(PORT_PHASMATYS_NAME, client.getVarbitValue(PORT_PHASMATYS_VAT_VARBIT), client.getVarbitValue(PORT_PHASMATYS_STUFF_VARBIT), VAT_IMAGE, this, config));
-		}
+		infoBoxManager.addInfoBox(new BrewingVat(KELDAGRIM_NAME, client.getVarbitValue(KELDAGRIM_VAT_VARBIT), KELDAGRIM_VAT_IMAGE, this, config));
+		infoBoxManager.addInfoBox(new BrewingVat(PORT_PHASMATYS_NAME, client.getVarbitValue(PORT_PHASMATYS_VAT_VARBIT), PORT_PHASMATYS_VAT_IMAGE, this, config));
 		infoBoxManager.addInfoBox(new BrewingBarrel(KELDAGRIM_NAME, client.getVarbitValue(KELDAGRIM_BARREL_VARBIT), BARREL_IMAGE, this, config));
 		infoBoxManager.addInfoBox(new BrewingBarrel(PORT_PHASMATYS_NAME, client.getVarbitValue(PORT_PHASMATYS_BARREL_VARBIT), BARREL_IMAGE, this, config));
 	}

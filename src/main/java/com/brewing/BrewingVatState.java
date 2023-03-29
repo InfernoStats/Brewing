@@ -41,8 +41,8 @@ public enum BrewingVatState {
 
 	/* Wizard's Mind Bomb */
 	YANILLIAN_HOPS(22),
-	FERMENTING_WIZARDS_MIND_BOMD_STATE_1(23),
-	FERMENTING_WIZARDS_MIND_BOMD_STATE_2(24),
+	FERMENTING_WIZARDS_MIND_BOMB_STATE_1(23),
+	FERMENTING_WIZARDS_MIND_BOMB_STATE_2(24),
 	WIZARDS_MIND_BOMB(25),
 	MATURE_WIZARDS_MIND_BOMB(26),
 
@@ -227,8 +227,8 @@ public enum BrewingVatState {
 			/* Wizard's Mind Bomb */
 			case YANILLIAN_HOPS:
 				return "Yanillian Hops";
-			case FERMENTING_WIZARDS_MIND_BOMD_STATE_1:
-			case FERMENTING_WIZARDS_MIND_BOMD_STATE_2:
+			case FERMENTING_WIZARDS_MIND_BOMB_STATE_1:
+			case FERMENTING_WIZARDS_MIND_BOMB_STATE_2:
 				return "Fermenting Wizard's Mind Bomb";
 			case WIZARDS_MIND_BOMB:
 				return "Wizard's Mind Bomb";

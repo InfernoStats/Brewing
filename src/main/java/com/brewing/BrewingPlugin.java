@@ -1,16 +1,12 @@
 package com.brewing;
 
 import com.google.inject.Provides;
-
 import java.awt.image.BufferedImage;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
-import net.runelite.api.ItemID;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.VarbitChanged;
-import static net.runelite.api.MenuAction.RUNELITE_OVERLAY_CONFIG;
-
 import net.runelite.client.Notifier;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
@@ -20,8 +16,6 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import net.runelite.client.ui.overlay.OverlayManager;
-import static net.runelite.client.ui.overlay.OverlayManager.OPTION_CONFIGURE;
-import net.runelite.client.ui.overlay.OverlayMenuEntry;
 import net.runelite.client.util.ImageUtil;
 
 @Slf4j
@@ -49,9 +43,6 @@ public class BrewingPlugin extends Plugin {
 	private Notifier notifier;
 
 	@Inject
-	private BrewingOverlay brewingOverlay;
-
-	@Inject
 	private BrewingConfig config;
 
 	public static final String KELDAGRIM_NAME = "Keldagrim";
@@ -68,7 +59,7 @@ public class BrewingPlugin extends Plugin {
 
 	private static final BufferedImage VAT_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "./vat.png");
 	private static final BufferedImage BARREL_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "./barrel.png");
-	//private final BufferedImage THE_STUFF_IMAGE = itemManager.getImage(ItemID.THE_STUFF);
+	private static final BufferedImage THE_STUFF_VAT_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "./vat_stuff.png");
 
 	@Provides
 	BrewingConfig provideConfig(ConfigManager configManager) {
@@ -77,16 +68,10 @@ public class BrewingPlugin extends Plugin {
 
 	@Override
 	protected void startUp() throws Exception {
-		//OverlayMenuEntry menuEntry = new OverlayMenuEntry(RUNELITE_OVERLAY_CONFIG, OPTION_CONFIGURE, "Brewing overlay"); //WHAT DOES OVERLAY DO
-
-		//brewingOverlay.getMenuEntries().add(menuEntry);
-		//overlayManager.add(brewingOverlay);
 	}
 
 	@Override
 	protected void shutDown() throws Exception {
-		brewingOverlay.getMenuEntries().clear();
-		overlayManager.remove(brewingOverlay);
 		removeInfoBoxes();
 	}
 
@@ -131,8 +116,23 @@ public class BrewingPlugin extends Plugin {
 
 	private void addInfoBoxes()
 	{
-		infoBoxManager.addInfoBox(new BrewingVat(KELDAGRIM_NAME, client.getVarbitValue(KELDAGRIM_VAT_VARBIT), client.getVarbitValue(KELDAGRIM_STUFF_VARBIT), VAT_IMAGE, this, config));
-		infoBoxManager.addInfoBox(new BrewingVat(PORT_PHASMATYS_NAME, client.getVarbitValue(PORT_PHASMATYS_VAT_VARBIT), client.getVarbitValue(PORT_PHASMATYS_STUFF_VARBIT), VAT_IMAGE, this, config));
+		if(client.getVarbitValue(KELDAGRIM_STUFF_VARBIT) == 1)
+		{
+			infoBoxManager.addInfoBox(new BrewingVat(KELDAGRIM_NAME, client.getVarbitValue(KELDAGRIM_VAT_VARBIT), client.getVarbitValue(KELDAGRIM_STUFF_VARBIT), THE_STUFF_VAT_IMAGE, this, config));
+		}
+		else
+		{
+			infoBoxManager.addInfoBox(new BrewingVat(KELDAGRIM_NAME, client.getVarbitValue(KELDAGRIM_VAT_VARBIT), client.getVarbitValue(KELDAGRIM_STUFF_VARBIT), VAT_IMAGE, this, config));
+
+		}
+		if(client.getVarbitValue(PORT_PHASMATYS_STUFF_VARBIT) == 1)
+		{
+			infoBoxManager.addInfoBox(new BrewingVat(PORT_PHASMATYS_NAME, client.getVarbitValue(PORT_PHASMATYS_VAT_VARBIT), client.getVarbitValue(PORT_PHASMATYS_STUFF_VARBIT), THE_STUFF_VAT_IMAGE, this, config));
+		}
+		else
+		{
+			infoBoxManager.addInfoBox(new BrewingVat(PORT_PHASMATYS_NAME, client.getVarbitValue(PORT_PHASMATYS_VAT_VARBIT), client.getVarbitValue(PORT_PHASMATYS_STUFF_VARBIT), VAT_IMAGE, this, config));
+		}
 		infoBoxManager.addInfoBox(new BrewingBarrel(KELDAGRIM_NAME, client.getVarbitValue(KELDAGRIM_BARREL_VARBIT), BARREL_IMAGE, this, config));
 		infoBoxManager.addInfoBox(new BrewingBarrel(PORT_PHASMATYS_NAME, client.getVarbitValue(PORT_PHASMATYS_BARREL_VARBIT), BARREL_IMAGE, this, config));
 	}

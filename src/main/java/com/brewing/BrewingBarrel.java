@@ -69,6 +69,6 @@ public class BrewingBarrel extends InfoBox
 	{
 		return config.barrelDisplayCond() == BrewingConfig.BarrelState.ALWAYS ||
 				(barrel != BrewingBarrelState.EMPTY.getValue() && config.barrelDisplayCond() == BrewingConfig.BarrelState.NOT_EMPTY) ||
-				((BrewingBarrelState.hasNormalContents(barrel) || BrewingBarrelState.hasNormalContents(barrel)) && config.barrelDisplayCond() == BrewingConfig.BarrelState.FULL);
+				(BrewingBarrelState.isFull(barrel) && config.barrelDisplayCond() == BrewingConfig.BarrelState.FULL);
 	}
 }

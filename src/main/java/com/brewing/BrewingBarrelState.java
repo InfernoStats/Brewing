@@ -20,7 +20,7 @@ public enum BrewingBarrelState {
 	UNFERMENTED(4),
 
 	/* Kelda Stout */
-	KELDA_STOUT(3),
+	KELDA_STOUT_1_PINT(3),
 
 	/* Dwarven Stout */
 	DWARVEN_STOUT_8_PINTS(8),
@@ -232,7 +232,7 @@ public enum BrewingBarrelState {
 	);
 
 	private static final Set<BrewingBarrelState> NORMAL_CONTENTS = Sets.immutableEnumSet(
-			KELDA_STOUT,
+			KELDA_STOUT_1_PINT,
 			DWARVEN_STOUT_8_PINTS,
 			DWARVEN_STOUT_7_PINTS,
 			DWARVEN_STOUT_6_PINTS,
@@ -398,6 +398,31 @@ public enum BrewingBarrelState {
 			MATURE_CIDER_1_PINT
 	);
 
+	private static final Set<BrewingBarrelState> FULL = Sets.immutableEnumSet(
+			KELDA_STOUT_1_PINT,
+			DWARVEN_STOUT_8_PINTS,
+			ASGARNIAN_ALE_8_PINTS,
+			GREENMANS_ALE_8_PINTS,
+			WIZARDS_MIND_BOMB_8_PINTS,
+			DRAGON_BITTER_8_PINTS,
+			MOONLIGHT_MEAD_8_PINTS,
+			AXEMANS_FOLLY_8_PINTS,
+			CHEFS_DELIGHT_8_PINTS,
+			SLAYERS_RESPITE_8_PINTS,
+			CIDER_8_PINTS,
+			MATURE_DWARVEN_STOUT_8_PINTS,
+			MATURE_ASGARNIAN_ALE_8_PINTS,
+			MATURE_GREENMANS_ALE_8_PINTS,
+			MATURE_WIZARDS_MIND_BOMB_8_PINTS,
+			MATURE_DRAGON_BITTER_8_PINTS,
+			MATURE_MOONLIGHT_MEAD_8_PINTS,
+			MATURE_AXEMANS_FOLLY_8_PINTS,
+			MATURE_CHEFS_DELIGHT_8_PINTS,
+			MATURE_SLAYERS_RESPITE_8_PINTS,
+			MATURE_CIDER_8_PINTS
+	);
+
+
 	private final int value;
 
 	private static final Map<Integer, BrewingBarrelState> map;
@@ -425,6 +450,11 @@ public enum BrewingBarrelState {
 		return Stream.of(BrewingBarrelState.fromInt(value)).anyMatch(BrewingBarrelState.NORMAL_CONTENTS::contains);
 	}
 
+	public static boolean isFull(int value)
+	{
+		return Stream.of(BrewingBarrelState.fromInt(value)).anyMatch(BrewingBarrelState.FULL::contains);
+	}
+
 	public static String toString(int value)
 	{
 		switch (BrewingBarrelState.fromInt(value)) // Can this just be modulo'd somehow?
@@ -437,8 +467,8 @@ public enum BrewingBarrelState {
 				return "Bad cider";
 			case UNFERMENTED:
 				return "Unfermented";
-			case KELDA_STOUT:
-				return "Kelda Stout";
+			case KELDA_STOUT_1_PINT:
+				return "1 Pint: Kelda Stout";
 			case DWARVEN_STOUT_8_PINTS:
 				return "8 Pints: Dwarven Stout";
 			case DWARVEN_STOUT_7_PINTS:

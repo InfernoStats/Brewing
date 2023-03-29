@@ -1,4 +1,4 @@
-package com.infernostats;
+package com.brewing;
 
 import net.runelite.client.RuneLite;
 import net.runelite.client.externalplugins.ExternalPluginManager;

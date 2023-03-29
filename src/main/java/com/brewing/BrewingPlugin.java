@@ -2,9 +2,7 @@ package com.brewing;
 
 import com.google.inject.Provides;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.stream.Stream;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.Client;
@@ -61,7 +59,7 @@ public class BrewingPlugin extends Plugin {
 	private static final int PORT_PHASMATYS_STUFF_VARBIT = 2295;
 	private static final int PORT_PHASMATYS_BARREL_VARBIT = 739;
 
-	private boolean infoboxInit = false; //how can i make them update withv arbs instantly on client thread?
+	private boolean infoboxInit = false;
 
 	private static final BufferedImage VAT_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "./vat.png");
 	private static final BufferedImage BARREL_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "./barrel.png");
@@ -117,27 +115,6 @@ public class BrewingPlugin extends Plugin {
 			addInfoBoxes();
 			infoboxInit = true;
 		}
-	}
-
-	public Color getVatStateColor(int value)
-	{
-		if (Stream.of(BrewingVatState.fromInt(value)).anyMatch(BrewingVatState.FAILURE_STATES::contains))
-		{
-			return Color.RED;
-		}
-		else if (Stream.of(BrewingVatState.fromInt(value)).anyMatch(BrewingVatState.COMPLETE_MATURE_STATES::contains))
-		{
-			return Color.BLUE;
-		}
-		else if (Stream.of(BrewingVatState.fromInt(value)).anyMatch(BrewingVatState.COMPLETE_NORMAL_STATES::contains))
-		{
-			return Color.GREEN;
-		}
-		else if (Stream.of(BrewingVatState.fromInt(value)).anyMatch(BrewingVatState.PARTIAL_STATES::contains))
-		{
-			return Color.YELLOW;
-		}
-		return Color.WHITE;
 	}
 
 	private void addInfoBoxes()

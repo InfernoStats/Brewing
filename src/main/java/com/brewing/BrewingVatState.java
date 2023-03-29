@@ -1,12 +1,12 @@
 package com.brewing;
 
 import com.google.common.collect.Sets;
-
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -159,6 +159,26 @@ public enum BrewingVatState {
 	);
 
 	private final int value;
+
+	public static boolean isBad(int value)
+	{
+		return Stream.of(BrewingVatState.fromInt(value)).anyMatch(BrewingVatState.FAILURE_STATES::contains);
+	}
+
+	public static boolean isPartial(int value)
+	{
+		return Stream.of(BrewingVatState.fromInt(value)).anyMatch(BrewingVatState.PARTIAL_STATES::contains);
+	}
+
+	public static boolean isCompletedNormal(int value)
+	{
+		return Stream.of(BrewingVatState.fromInt(value)).anyMatch(BrewingVatState.COMPLETE_NORMAL_STATES::contains);
+	}
+
+	public static boolean isCompletedMature(int value)
+	{
+		return Stream.of(BrewingVatState.fromInt(value)).anyMatch(BrewingVatState.COMPLETE_MATURE_STATES::contains);
+	}
 
 	public static String toString(int value)
 	{

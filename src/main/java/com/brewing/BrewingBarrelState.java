@@ -1,7 +1,12 @@
 package com.brewing;
 
 import com.google.common.collect.Sets;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -221,53 +226,539 @@ public enum BrewingBarrelState {
 	UNINITIALIZED(-2);
 
 	private static final Set<BrewingBarrelState> DRAIN_STATES = Sets.immutableEnumSet(
-			EMPTY,
 			BAD_ALE,
 			BAD_CIDER,
 			UNFERMENTED
 	);
 
 	private static final Set<BrewingBarrelState> NORMAL_CONTENTS = Sets.immutableEnumSet(
-			DWARVEN_STOUT_8_PINTS
+			KELDA_STOUT,
+			DWARVEN_STOUT_8_PINTS,
+			DWARVEN_STOUT_7_PINTS,
+			DWARVEN_STOUT_6_PINTS,
+			DWARVEN_STOUT_5_PINTS,
+			DWARVEN_STOUT_4_PINTS,
+			DWARVEN_STOUT_3_PINTS,
+			DWARVEN_STOUT_2_PINTS,
+			DWARVEN_STOUT_1_PINT,
+			ASGARNIAN_ALE_8_PINTS,
+			ASGARNIAN_ALE_7_PINTS,
+			ASGARNIAN_ALE_6_PINTS,
+			ASGARNIAN_ALE_5_PINTS,
+			ASGARNIAN_ALE_4_PINTS,
+			ASGARNIAN_ALE_3_PINTS,
+			ASGARNIAN_ALE_2_PINTS,
+			ASGARNIAN_ALE_1_PINT,
+			GREENMANS_ALE_8_PINTS,
+			GREENMANS_ALE_7_PINTS,
+			GREENMANS_ALE_6_PINTS,
+			GREENMANS_ALE_5_PINTS,
+			GREENMANS_ALE_4_PINTS,
+			GREENMANS_ALE_3_PINTS,
+			GREENMANS_ALE_2_PINTS,
+			GREENMANS_ALE_1_PINT,
+			WIZARDS_MIND_BOMB_8_PINTS,
+			WIZARDS_MIND_BOMB_7_PINTS,
+			WIZARDS_MIND_BOMB_6_PINTS,
+			WIZARDS_MIND_BOMB_5_PINTS,
+			WIZARDS_MIND_BOMB_4_PINTS,
+			WIZARDS_MIND_BOMB_3_PINTS,
+			WIZARDS_MIND_BOMB_2_PINTS,
+			WIZARDS_MIND_BOMB_1_PINT,
+			DRAGON_BITTER_8_PINTS,
+			DRAGON_BITTER_7_PINTS,
+			DRAGON_BITTER_6_PINTS,
+			DRAGON_BITTER_5_PINTS,
+			DRAGON_BITTER_4_PINTS,
+			DRAGON_BITTER_3_PINTS,
+			DRAGON_BITTER_2_PINTS,
+			DRAGON_BITTER_1_PINT,
+			MOONLIGHT_MEAD_8_PINTS,
+			MOONLIGHT_MEAD_7_PINTS,
+			MOONLIGHT_MEAD_6_PINTS,
+			MOONLIGHT_MEAD_5_PINTS,
+			MOONLIGHT_MEAD_4_PINTS,
+			MOONLIGHT_MEAD_3_PINTS,
+			MOONLIGHT_MEAD_2_PINTS,
+			MOONLIGHT_MEAD_1_PINT,
+			AXEMANS_FOLLY_8_PINTS,
+			AXEMANS_FOLLY_7_PINTS,
+			AXEMANS_FOLLY_6_PINTS,
+			AXEMANS_FOLLY_5_PINTS,
+			AXEMANS_FOLLY_4_PINTS,
+			AXEMANS_FOLLY_3_PINTS,
+			AXEMANS_FOLLY_2_PINTS,
+			AXEMANS_FOLLY_1_PINT,
+			CHEFS_DELIGHT_8_PINTS,
+			CHEFS_DELIGHT_7_PINTS,
+			CHEFS_DELIGHT_6_PINTS,
+			CHEFS_DELIGHT_5_PINTS,
+			CHEFS_DELIGHT_4_PINTS,
+			CHEFS_DELIGHT_3_PINTS,
+			CHEFS_DELIGHT_2_PINTS,
+			CHEFS_DELIGHT_1_PINT,
+			SLAYERS_RESPITE_8_PINTS,
+			SLAYERS_RESPITE_7_PINTS,
+			SLAYERS_RESPITE_6_PINTS,
+			SLAYERS_RESPITE_5_PINTS,
+			SLAYERS_RESPITE_4_PINTS,
+			SLAYERS_RESPITE_3_PINTS,
+			SLAYERS_RESPITE_2_PINTS,
+			SLAYERS_RESPITE_1_PINT,
+			CIDER_8_PINTS,
+			CIDER_7_PINTS,
+			CIDER_6_PINTS,
+			CIDER_5_PINTS,
+			CIDER_4_PINTS,
+			CIDER_3_PINTS,
+			CIDER_2_PINTS,
+			CIDER_1_PINT
 	);
 
 	private static final Set<BrewingBarrelState> MATURE_CONTENTS = Sets.immutableEnumSet(
-			MATURE_DWARVEN_STOUT_8_PINTS
+			MATURE_DWARVEN_STOUT_8_PINTS,
+			MATURE_DWARVEN_STOUT_7_PINTS,
+			MATURE_DWARVEN_STOUT_6_PINTS,
+			MATURE_DWARVEN_STOUT_5_PINTS,
+			MATURE_DWARVEN_STOUT_4_PINTS,
+			MATURE_DWARVEN_STOUT_3_PINTS,
+			MATURE_DWARVEN_STOUT_2_PINTS,
+			MATURE_DWARVEN_STOUT_1_PINT,
+			MATURE_ASGARNIAN_ALE_8_PINTS,
+			MATURE_ASGARNIAN_ALE_7_PINTS,
+			MATURE_ASGARNIAN_ALE_6_PINTS,
+			MATURE_ASGARNIAN_ALE_5_PINTS,
+			MATURE_ASGARNIAN_ALE_4_PINTS,
+			MATURE_ASGARNIAN_ALE_3_PINTS,
+			MATURE_ASGARNIAN_ALE_2_PINTS,
+			MATURE_ASGARNIAN_ALE_1_PINT,
+			MATURE_GREENMANS_ALE_8_PINTS,
+			MATURE_GREENMANS_ALE_7_PINTS,
+			MATURE_GREENMANS_ALE_6_PINTS,
+			MATURE_GREENMANS_ALE_5_PINTS,
+			MATURE_GREENMANS_ALE_4_PINTS,
+			MATURE_GREENMANS_ALE_3_PINTS,
+			MATURE_GREENMANS_ALE_2_PINTS,
+			MATURE_GREENMANS_ALE_1_PINT,
+			MATURE_WIZARDS_MIND_BOMB_8_PINTS,
+			MATURE_WIZARDS_MIND_BOMB_7_PINTS,
+			MATURE_WIZARDS_MIND_BOMB_6_PINTS,
+			MATURE_WIZARDS_MIND_BOMB_5_PINTS,
+			MATURE_WIZARDS_MIND_BOMB_4_PINTS,
+			MATURE_WIZARDS_MIND_BOMB_3_PINTS,
+			MATURE_WIZARDS_MIND_BOMB_2_PINTS,
+			MATURE_WIZARDS_MIND_BOMB_1_PINT,
+			MATURE_DRAGON_BITTER_8_PINTS,
+			MATURE_DRAGON_BITTER_7_PINTS,
+			MATURE_DRAGON_BITTER_6_PINTS,
+			MATURE_DRAGON_BITTER_5_PINTS,
+			MATURE_DRAGON_BITTER_4_PINTS,
+			MATURE_DRAGON_BITTER_3_PINTS,
+			MATURE_DRAGON_BITTER_2_PINTS,
+			MATURE_DRAGON_BITTER_1_PINT,
+			MATURE_MOONLIGHT_MEAD_8_PINTS,
+			MATURE_MOONLIGHT_MEAD_7_PINTS,
+			MATURE_MOONLIGHT_MEAD_6_PINTS,
+			MATURE_MOONLIGHT_MEAD_5_PINTS,
+			MATURE_MOONLIGHT_MEAD_4_PINTS,
+			MATURE_MOONLIGHT_MEAD_3_PINTS,
+			MATURE_MOONLIGHT_MEAD_2_PINTS,
+			MATURE_MOONLIGHT_MEAD_1_PINT,
+			MATURE_AXEMANS_FOLLY_8_PINTS,
+			MATURE_AXEMANS_FOLLY_7_PINTS,
+			MATURE_AXEMANS_FOLLY_6_PINTS,
+			MATURE_AXEMANS_FOLLY_5_PINTS,
+			MATURE_AXEMANS_FOLLY_4_PINTS,
+			MATURE_AXEMANS_FOLLY_3_PINTS,
+			MATURE_AXEMANS_FOLLY_2_PINTS,
+			MATURE_AXEMANS_FOLLY_1_PINT,
+			MATURE_CHEFS_DELIGHT_8_PINTS,
+			MATURE_CHEFS_DELIGHT_7_PINTS,
+			MATURE_CHEFS_DELIGHT_6_PINTS,
+			MATURE_CHEFS_DELIGHT_5_PINTS,
+			MATURE_CHEFS_DELIGHT_4_PINTS,
+			MATURE_CHEFS_DELIGHT_3_PINTS,
+			MATURE_CHEFS_DELIGHT_2_PINTS,
+			MATURE_CHEFS_DELIGHT_1_PINT,
+			MATURE_SLAYERS_RESPITE_8_PINTS,
+			MATURE_SLAYERS_RESPITE_7_PINTS,
+			MATURE_SLAYERS_RESPITE_6_PINTS,
+			MATURE_SLAYERS_RESPITE_5_PINTS,
+			MATURE_SLAYERS_RESPITE_4_PINTS,
+			MATURE_SLAYERS_RESPITE_3_PINTS,
+			MATURE_SLAYERS_RESPITE_2_PINTS,
+			MATURE_SLAYERS_RESPITE_1_PINT,
+			MATURE_CIDER_8_PINTS,
+			MATURE_CIDER_7_PINTS,
+			MATURE_CIDER_6_PINTS,
+			MATURE_CIDER_5_PINTS,
+			MATURE_CIDER_4_PINTS,
+			MATURE_CIDER_3_PINTS,
+			MATURE_CIDER_2_PINTS,
+			MATURE_CIDER_1_PINT
 	);
 
 	private final int value;
 
-
-	public static boolean hasNormalContents(int value) // does this need a param or no?
-	{
-		return Stream.of(BrewingVatState.values()[value]).anyMatch(NORMAL_CONTENTS::contains);
+	private static final Map<Integer, BrewingBarrelState> map;
+	static {
+		map = Arrays.stream(values())
+				.collect(Collectors.toMap(e -> e.value, e -> e));
 	}
 
-	public static boolean hasMatureContents(int value) // does this need a param or no?
-	{
-		return Stream.of(BrewingVatState.values()[value]).anyMatch(MATURE_CONTENTS::contains);
+	public static BrewingBarrelState fromInt(int value) {
+		return Optional.ofNullable(map.get(value)).orElse(UNKNOWN);
 	}
 
-	public static boolean isDrainable(int value) // does this need a param or no?
+	public static boolean isDrainable(int value)
 	{
-		return Stream.of(BrewingVatState.values()[value]).anyMatch(DRAIN_STATES::contains);
+		return Stream.of(BrewingBarrelState.fromInt(value)).anyMatch(BrewingBarrelState.DRAIN_STATES::contains);
+	}
+
+	public static boolean hasMatureContents(int value)
+	{
+		return Stream.of(BrewingBarrelState.fromInt(value)).anyMatch(BrewingBarrelState.MATURE_CONTENTS::contains);
+	}
+
+	public static boolean hasNormalContents(int value)
+	{
+		return Stream.of(BrewingBarrelState.fromInt(value)).anyMatch(BrewingBarrelState.NORMAL_CONTENTS::contains);
 	}
 
 	public static String toString(int value)
 	{
-		switch (BrewingVatState.values()[value])
+		switch (BrewingBarrelState.fromInt(value)) // Can this just be modulo'd somehow?
 		{
 			case EMPTY:
 				return "Empty";
-			case WATER:
-				return "Water";
-			case BARLEY:
-				return "Barley";
-
 			case BAD_ALE:
-				return "Bad Ale";
+				return "Bad ale";
 			case BAD_CIDER:
-				return "Bad Cider";
+				return "Bad cider";
+			case UNFERMENTED:
+				return "Unfermented";
+			case KELDA_STOUT:
+				return "Kelda Stout";
+			case DWARVEN_STOUT_8_PINTS:
+				return "8 Pints: Dwarven Stout";
+			case DWARVEN_STOUT_7_PINTS:
+				return "7 Pints: ";
+			case DWARVEN_STOUT_6_PINTS:
+				return "6 Pints: ";
+			case DWARVEN_STOUT_5_PINTS:
+				return "5 Pints: ";
+			case DWARVEN_STOUT_4_PINTS:
+				return "4 Pints: ";
+			case DWARVEN_STOUT_3_PINTS:
+				return "3 Pints: ";
+			case DWARVEN_STOUT_2_PINTS:
+				return "2 Pints: ";
+			case DWARVEN_STOUT_1_PINT:
+				return "1 Pint: ";
+			case ASGARNIAN_ALE_8_PINTS:
+				return "8 Pints: ";
+			case ASGARNIAN_ALE_7_PINTS:
+				return "7 Pints: ";
+			case ASGARNIAN_ALE_6_PINTS:
+				return "6 Pints: ";
+			case ASGARNIAN_ALE_5_PINTS:
+				return "5 Pints: ";
+			case ASGARNIAN_ALE_4_PINTS:
+				return "4 Pints: ";
+			case ASGARNIAN_ALE_3_PINTS:
+				return "3 Pints: ";
+			case ASGARNIAN_ALE_2_PINTS:
+				return "2 Pints: ";
+			case ASGARNIAN_ALE_1_PINT:
+				return "1 Pint: ";
+			case GREENMANS_ALE_8_PINTS:
+				return "8 Pints: ";
+			case GREENMANS_ALE_7_PINTS:
+				return "7 Pints: ";
+			case GREENMANS_ALE_6_PINTS:
+				return "6 Pints: ";
+			case GREENMANS_ALE_5_PINTS:
+				return "5 Pints: ";
+			case GREENMANS_ALE_4_PINTS:
+				return "4 Pints: ";
+			case GREENMANS_ALE_3_PINTS:
+				return "3 Pints: ";
+			case GREENMANS_ALE_2_PINTS:
+				return "2 Pints: ";
+			case GREENMANS_ALE_1_PINT:
+				return "1 Pint: ";
+			case WIZARDS_MIND_BOMB_8_PINTS:
+				return "8 Pints: ";
+			case WIZARDS_MIND_BOMB_7_PINTS:
+				return "7 Pints: ";
+			case WIZARDS_MIND_BOMB_6_PINTS:
+				return "6 Pints: ";
+			case WIZARDS_MIND_BOMB_5_PINTS:
+				return "5 Pints: ";
+			case WIZARDS_MIND_BOMB_4_PINTS:
+				return "4 Pints: ";
+			case WIZARDS_MIND_BOMB_3_PINTS:
+				return "3 Pints: ";
+			case WIZARDS_MIND_BOMB_2_PINTS:
+				return "2 Pints: ";
+			case WIZARDS_MIND_BOMB_1_PINT:
+				return "1 Pint: ";
+			case DRAGON_BITTER_8_PINTS:
+				return "8 Pints: ";
+			case DRAGON_BITTER_7_PINTS:
+				return "7 Pints: ";
+			case DRAGON_BITTER_6_PINTS:
+				return "6 Pints: ";
+			case DRAGON_BITTER_5_PINTS:
+				return "5 Pints: ";
+			case DRAGON_BITTER_4_PINTS:
+				return "4 Pints: ";
+			case DRAGON_BITTER_3_PINTS:
+				return "3 Pints: ";
+			case DRAGON_BITTER_2_PINTS:
+				return "2 Pints: ";
+			case DRAGON_BITTER_1_PINT:
+				return "1 Pint: ";
+			case MOONLIGHT_MEAD_8_PINTS:
+				return "8 Pints: ";
+			case MOONLIGHT_MEAD_7_PINTS:
+				return "7 Pints: ";
+			case MOONLIGHT_MEAD_6_PINTS:
+				return "6 Pints: ";
+			case MOONLIGHT_MEAD_5_PINTS:
+				return "5 Pints: ";
+			case MOONLIGHT_MEAD_4_PINTS:
+				return "4 Pints: ";
+			case MOONLIGHT_MEAD_3_PINTS:
+				return "3 Pints: ";
+			case MOONLIGHT_MEAD_2_PINTS:
+				return "2 Pints: ";
+			case MOONLIGHT_MEAD_1_PINT:
+				return "1 Pint: ";
+			case AXEMANS_FOLLY_8_PINTS:
+				return "8 Pints: ";
+			case AXEMANS_FOLLY_7_PINTS:
+				return "7 Pints: ";
+			case AXEMANS_FOLLY_6_PINTS:
+				return "6 Pints: ";
+			case AXEMANS_FOLLY_5_PINTS:
+				return "5 Pints: ";
+			case AXEMANS_FOLLY_4_PINTS:
+				return "4 Pints: ";
+			case AXEMANS_FOLLY_3_PINTS:
+				return "3 Pints: ";
+			case AXEMANS_FOLLY_2_PINTS:
+				return "2 Pints: ";
+			case AXEMANS_FOLLY_1_PINT:
+				return "1 Pint: ";
+			case CHEFS_DELIGHT_8_PINTS:
+				return "8 Pints: ";
+			case CHEFS_DELIGHT_7_PINTS:
+				return "7 Pints: ";
+			case CHEFS_DELIGHT_6_PINTS:
+				return "6 Pints: ";
+			case CHEFS_DELIGHT_5_PINTS:
+				return "5 Pints: ";
+			case CHEFS_DELIGHT_4_PINTS:
+				return "4 Pints: ";
+			case CHEFS_DELIGHT_3_PINTS:
+				return "3 Pints: ";
+			case CHEFS_DELIGHT_2_PINTS:
+				return "2 Pints: ";
+			case CHEFS_DELIGHT_1_PINT:
+				return "1 Pint: ";
+			case SLAYERS_RESPITE_8_PINTS:
+				return "8 Pints: ";
+			case SLAYERS_RESPITE_7_PINTS:
+				return "7 Pints: ";
+			case SLAYERS_RESPITE_6_PINTS:
+				return "6 Pints: ";
+			case SLAYERS_RESPITE_5_PINTS:
+				return "5 Pints: ";
+			case SLAYERS_RESPITE_4_PINTS:
+				return "4 Pints: ";
+			case SLAYERS_RESPITE_3_PINTS:
+				return "3 Pints: ";
+			case SLAYERS_RESPITE_2_PINTS:
+				return "2 Pints: ";
+			case SLAYERS_RESPITE_1_PINT:
+				return "1 Pint: ";
+			case CIDER_8_PINTS:
+				return "8 Pints: ";
+			case CIDER_7_PINTS:
+				return "7 Pints: ";
+			case CIDER_6_PINTS:
+				return "6 Pints: ";
+			case CIDER_5_PINTS:
+				return "5 Pints: ";
+			case CIDER_4_PINTS:
+				return "4 Pints: ";
+			case CIDER_3_PINTS:
+				return "3 Pints: ";
+			case CIDER_2_PINTS:
+				return "2 Pints: ";
+			case CIDER_1_PINT:
+				return "1 Pint: ";
+			case MATURE_DWARVEN_STOUT_8_PINTS:
+				return "8 Pints: ";
+			case MATURE_DWARVEN_STOUT_7_PINTS:
+				return "7 Pints: ";
+			case MATURE_DWARVEN_STOUT_6_PINTS:
+				return "6 Pints: ";
+			case MATURE_DWARVEN_STOUT_5_PINTS:
+				return "5 Pints: ";
+			case MATURE_DWARVEN_STOUT_4_PINTS:
+				return "4 Pints: ";
+			case MATURE_DWARVEN_STOUT_3_PINTS:
+				return "3 Pints: ";
+			case MATURE_DWARVEN_STOUT_2_PINTS:
+				return "2 Pints: ";
+			case MATURE_DWARVEN_STOUT_1_PINT:
+				return "1 Pint: ";
+			case MATURE_ASGARNIAN_ALE_8_PINTS:
+				return "8 Pints: ";
+			case MATURE_ASGARNIAN_ALE_7_PINTS:
+				return "7 Pints: ";
+			case MATURE_ASGARNIAN_ALE_6_PINTS:
+				return "6 Pints: ";
+			case MATURE_ASGARNIAN_ALE_5_PINTS:
+				return "5 Pints: ";
+			case MATURE_ASGARNIAN_ALE_4_PINTS:
+				return "4 Pints: ";
+			case MATURE_ASGARNIAN_ALE_3_PINTS:
+				return "3 Pints: ";
+			case MATURE_ASGARNIAN_ALE_2_PINTS:
+				return "2 Pints: ";
+			case MATURE_ASGARNIAN_ALE_1_PINT:
+				return "1 Pint: ";
+			case MATURE_GREENMANS_ALE_8_PINTS:
+				return "8 Pints: ";
+			case MATURE_GREENMANS_ALE_7_PINTS:
+				return "7 Pints: ";
+			case MATURE_GREENMANS_ALE_6_PINTS:
+				return "6 Pints: ";
+			case MATURE_GREENMANS_ALE_5_PINTS:
+				return "5 Pints: ";
+			case MATURE_GREENMANS_ALE_4_PINTS:
+				return "4 Pints: ";
+			case MATURE_GREENMANS_ALE_3_PINTS:
+				return "3 Pints: ";
+			case MATURE_GREENMANS_ALE_2_PINTS:
+				return "2 Pints: ";
+			case MATURE_GREENMANS_ALE_1_PINT:
+				return "1 Pint: ";
+			case MATURE_WIZARDS_MIND_BOMB_8_PINTS:
+				return "8 Pints: ";
+			case MATURE_WIZARDS_MIND_BOMB_7_PINTS:
+				return "7 Pints: ";
+			case MATURE_WIZARDS_MIND_BOMB_6_PINTS:
+				return "6 Pints: ";
+			case MATURE_WIZARDS_MIND_BOMB_5_PINTS:
+				return "5 Pints: ";
+			case MATURE_WIZARDS_MIND_BOMB_4_PINTS:
+				return "4 Pints: ";
+			case MATURE_WIZARDS_MIND_BOMB_3_PINTS:
+				return "3 Pints: ";
+			case MATURE_WIZARDS_MIND_BOMB_2_PINTS:
+				return "2 Pints: ";
+			case MATURE_WIZARDS_MIND_BOMB_1_PINT:
+				return "1 Pint: ";
+			case MATURE_DRAGON_BITTER_8_PINTS:
+				return "8 Pints: ";
+			case MATURE_DRAGON_BITTER_7_PINTS:
+				return "7 Pints: ";
+			case MATURE_DRAGON_BITTER_6_PINTS:
+				return "6 Pints: ";
+			case MATURE_DRAGON_BITTER_5_PINTS:
+				return "5 Pints: ";
+			case MATURE_DRAGON_BITTER_4_PINTS:
+				return "4 Pints: ";
+			case MATURE_DRAGON_BITTER_3_PINTS:
+				return "3 Pints: ";
+			case MATURE_DRAGON_BITTER_2_PINTS:
+				return "2 Pints: ";
+			case MATURE_DRAGON_BITTER_1_PINT:
+				return "1 Pint: ";
+			case MATURE_MOONLIGHT_MEAD_8_PINTS:
+				return "8 Pints: ";
+			case MATURE_MOONLIGHT_MEAD_7_PINTS:
+				return "7 Pints: ";
+			case MATURE_MOONLIGHT_MEAD_6_PINTS:
+				return "6 Pints: ";
+			case MATURE_MOONLIGHT_MEAD_5_PINTS:
+				return "5 Pints: ";
+			case MATURE_MOONLIGHT_MEAD_4_PINTS:
+				return "4 Pints: ";
+			case MATURE_MOONLIGHT_MEAD_3_PINTS:
+				return "3 Pints: ";
+			case MATURE_MOONLIGHT_MEAD_2_PINTS:
+				return "2 Pints: ";
+			case MATURE_MOONLIGHT_MEAD_1_PINT:
+				return "1 Pint: ";
+			case MATURE_AXEMANS_FOLLY_8_PINTS:
+				return "8 Pints: ";
+			case MATURE_AXEMANS_FOLLY_7_PINTS:
+				return "7 Pints: ";
+			case MATURE_AXEMANS_FOLLY_6_PINTS:
+				return "6 Pints: ";
+			case MATURE_AXEMANS_FOLLY_5_PINTS:
+				return "5 Pints: ";
+			case MATURE_AXEMANS_FOLLY_4_PINTS:
+				return "4 Pints: ";
+			case MATURE_AXEMANS_FOLLY_3_PINTS:
+				return "3 Pints: ";
+			case MATURE_AXEMANS_FOLLY_2_PINTS:
+				return "2 Pints: ";
+			case MATURE_AXEMANS_FOLLY_1_PINT:
+				return "1 Pint: ";
+			case MATURE_CHEFS_DELIGHT_8_PINTS:
+				return "8 Pints: ";
+			case MATURE_CHEFS_DELIGHT_7_PINTS:
+				return "7 Pints: ";
+			case MATURE_CHEFS_DELIGHT_6_PINTS:
+				return "6 Pints: ";
+			case MATURE_CHEFS_DELIGHT_5_PINTS:
+				return "5 Pints: ";
+			case MATURE_CHEFS_DELIGHT_4_PINTS:
+				return "4 Pints: ";
+			case MATURE_CHEFS_DELIGHT_3_PINTS:
+				return "3 Pints: ";
+			case MATURE_CHEFS_DELIGHT_2_PINTS:
+				return "2 Pints: ";
+			case MATURE_CHEFS_DELIGHT_1_PINT:
+				return "1 Pint: ";
+			case MATURE_SLAYERS_RESPITE_8_PINTS:
+				return "8 Pints: ";
+			case MATURE_SLAYERS_RESPITE_7_PINTS:
+				return "7 Pints: ";
+			case MATURE_SLAYERS_RESPITE_6_PINTS:
+				return "6 Pints: ";
+			case MATURE_SLAYERS_RESPITE_5_PINTS:
+				return "5 Pints: ";
+			case MATURE_SLAYERS_RESPITE_4_PINTS:
+				return "4 Pints: ";
+			case MATURE_SLAYERS_RESPITE_3_PINTS:
+				return "3 Pints: ";
+			case MATURE_SLAYERS_RESPITE_2_PINTS:
+				return "2 Pints: ";
+			case MATURE_SLAYERS_RESPITE_1_PINT:
+				return "1 Pint: ";
+			case MATURE_CIDER_8_PINTS:
+				return "8 Pints: ";
+			case MATURE_CIDER_7_PINTS:
+				return "7 Pints: ";
+			case MATURE_CIDER_6_PINTS:
+				return "6 Pints: ";
+			case MATURE_CIDER_5_PINTS:
+				return "5 Pints: ";
+			case MATURE_CIDER_4_PINTS:
+				return "4 Pints: ";
+			case MATURE_CIDER_3_PINTS:
+				return "3 Pints: ";
+			case MATURE_CIDER_2_PINTS:
+				return "2 Pints: ";
+			case MATURE_CIDER_1_PINT:
+				return "1 Pint: ";
 
 			case UNKNOWN:
 				return "Unknown";

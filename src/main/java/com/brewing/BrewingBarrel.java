@@ -37,25 +37,38 @@ public class BrewingBarrel extends InfoBox
 	@Override
 	public Color getTextColor()
 	{
-		if (BrewingBarrelState.isDrainable(barrel))
+		if(BrewingBarrelState.isDrainable(barrel))
 		{
 			return Color.RED;
 		}
-		else if (BrewingBarrelState.hasMatureContents(barrel))
+		else if(BrewingBarrelState.hasMatureContents(barrel))
 		{
 			return Color.BLUE;
 		}
-		else if (BrewingBarrelState.hasNormalContents(barrel)) {
+		else if(BrewingBarrelState.hasNormalContents(barrel))
+		{
 			return Color.GREEN;
 		}
 		return Color.WHITE;
 	}
 
 	@Override
-	public boolean render() // check state configs too
+	public boolean render()
+	{
+		return canDisplayBarrel() && canDisplayBarrelCond();
+	}
+
+	private boolean canDisplayBarrel()
 	{
 		return config.displayBarrels() == BrewingConfig.DisplayMode.BOTH ||
 				(location == plugin.KELDAGRIM_NAME && config.displayBarrels() == BrewingConfig.DisplayMode.KELDAGRIM) ||
 				(location == plugin.PORT_PHASMATYS_NAME && config.displayBarrels() == BrewingConfig.DisplayMode.PORT_PHASMATYS);
+	}
+
+	private boolean canDisplayBarrelCond()
+	{
+		return config.barrelDisplayCond() == BrewingConfig.BarrelState.ALWAYS ||
+				(barrel != BrewingBarrelState.EMPTY.getValue() && config.barrelDisplayCond() == BrewingConfig.BarrelState.NOT_EMPTY) ||
+				((BrewingBarrelState.hasNormalContents(barrel) || BrewingBarrelState.hasNormalContents(barrel)) && config.barrelDisplayCond() == BrewingConfig.BarrelState.FULL);
 	}
 }

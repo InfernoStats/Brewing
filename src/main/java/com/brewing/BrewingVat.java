@@ -75,6 +75,6 @@ public class BrewingVat extends InfoBox
 	{
 		return config.vatDisplayCond() == BrewingConfig.VatState.ALWAYS ||
 				(vat != BrewingVatState.EMPTY.getValue() && config.vatDisplayCond() == BrewingConfig.VatState.PARTIAL_AND_COMPLETION) ||
-				((BrewingVatState.isCompletedNormal(vat) || BrewingVatState.isCompletedMature(vat)) && config.vatDisplayCond() == BrewingConfig.VatState.COMPLETION);
+				((BrewingVatState.isBad(vat) || BrewingVatState.isCompletedNormal(vat) || BrewingVatState.isCompletedMature(vat)) && config.vatDisplayCond() == BrewingConfig.VatState.COMPLETION);
 	}
 }

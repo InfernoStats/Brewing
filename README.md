@@ -7,5 +7,3 @@ Displays its current state in the brewing process, the current contents of the v
 ## Barrels
 Displays its current state and the current contents of the barrel in the tooltip.
 
-### TODO: Notifier on completion
-#### Should I make the barrel/vat different colors for Port Phasmatys?

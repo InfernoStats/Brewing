@@ -10,6 +10,8 @@ import net.runelite.api.ItemID;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.VarbitChanged;
 import static net.runelite.api.MenuAction.RUNELITE_OVERLAY_CONFIG;
+
+import net.runelite.client.Notifier;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
@@ -42,6 +44,9 @@ public class BrewingPlugin extends Plugin {
 
 	@Inject
 	private OverlayManager overlayManager;
+
+	@Inject
+	private Notifier notifier;
 
 	@Inject
 	private BrewingOverlay brewingOverlay;
@@ -97,7 +102,14 @@ public class BrewingPlugin extends Plugin {
 	public void onVarbitChanged(VarbitChanged varbitChanged) {
 		int var = varbitChanged.getVarbitId();
 
-		if (var == KELDAGRIM_VAT_VARBIT || var == PORT_PHASMATYS_VAT_VARBIT ||
+		if(config.notifyOnCompletion() &&
+				(var == KELDAGRIM_VAT_VARBIT || var == PORT_PHASMATYS_VAT_VARBIT) &&
+				(BrewingVatState.isCompletedNormal(varbitChanged.getValue()) || BrewingVatState.isCompletedMature(varbitChanged.getValue())))
+		{
+			notifier.notify(BrewingVatState.toString(varbitChanged.getValue()) + " completed in " + (var == KELDAGRIM_VAT_VARBIT ? "Keldagrim" : "Port Phasmatys") + " vat.");
+		}
+
+		if(var == KELDAGRIM_VAT_VARBIT || var == PORT_PHASMATYS_VAT_VARBIT ||
 				var == KELDAGRIM_STUFF_VARBIT || var == PORT_PHASMATYS_STUFF_VARBIT ||
 				var == KELDAGRIM_BARREL_VARBIT || var == PORT_PHASMATYS_BARREL_VARBIT) {
 			removeInfoBoxes();

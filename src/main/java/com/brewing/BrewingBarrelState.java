@@ -442,323 +442,323 @@ public enum BrewingBarrelState {
 			case DWARVEN_STOUT_8_PINTS:
 				return "8 Pints: Dwarven Stout";
 			case DWARVEN_STOUT_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Dwarven Stout";
 			case DWARVEN_STOUT_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Dwarven Stout";
 			case DWARVEN_STOUT_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Dwarven Stout";
 			case DWARVEN_STOUT_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Dwarven Stout";
 			case DWARVEN_STOUT_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Dwarven Stout";
 			case DWARVEN_STOUT_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Dwarven Stout";
 			case DWARVEN_STOUT_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Dwarven Stout";
 			case ASGARNIAN_ALE_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Asgarnian Ale";
 			case ASGARNIAN_ALE_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Asgarnian Ale";
 			case ASGARNIAN_ALE_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Asgarnian Ale";
 			case ASGARNIAN_ALE_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Asgarnian Ale";
 			case ASGARNIAN_ALE_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Asgarnian Ale";
 			case ASGARNIAN_ALE_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Asgarnian Ale";
 			case ASGARNIAN_ALE_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Asgarnian Ale";
 			case ASGARNIAN_ALE_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Asgarnian Ale";
 			case GREENMANS_ALE_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Greenman's Ale";
 			case GREENMANS_ALE_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Greenman's Ale";
 			case GREENMANS_ALE_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Greenman's Ale";
 			case GREENMANS_ALE_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Greenman's Ale";
 			case GREENMANS_ALE_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Greenman's Ale";
 			case GREENMANS_ALE_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Greenman's Ale";
 			case GREENMANS_ALE_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Greenman's Ale";
 			case GREENMANS_ALE_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Greenman's Ale";
 			case WIZARDS_MIND_BOMB_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Wizard's Mind Bomb";
 			case WIZARDS_MIND_BOMB_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Wizard's Mind Bomb";
 			case WIZARDS_MIND_BOMB_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Wizard's Mind Bomb";
 			case WIZARDS_MIND_BOMB_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Wizard's Mind Bomb";
 			case WIZARDS_MIND_BOMB_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Wizard's Mind Bomb";
 			case WIZARDS_MIND_BOMB_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Wizard's Mind Bomb";
 			case WIZARDS_MIND_BOMB_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Wizard's Mind Bomb";
 			case WIZARDS_MIND_BOMB_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Wizard's Mind Bomb";
 			case DRAGON_BITTER_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Dragon Bitter";
 			case DRAGON_BITTER_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Dragon Bitter";
 			case DRAGON_BITTER_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Dragon Bitter";
 			case DRAGON_BITTER_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Dragon Bitter";
 			case DRAGON_BITTER_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Dragon Bitter";
 			case DRAGON_BITTER_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Dragon Bitter";
 			case DRAGON_BITTER_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Dragon Bitter";
 			case DRAGON_BITTER_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Dragon Bitter";
 			case MOONLIGHT_MEAD_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Moonlight Mead";
 			case MOONLIGHT_MEAD_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Moonlight Mead";
 			case MOONLIGHT_MEAD_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Moonlight Mead";
 			case MOONLIGHT_MEAD_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Moonlight Mead";
 			case MOONLIGHT_MEAD_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Moonlight Mead";
 			case MOONLIGHT_MEAD_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Moonlight Mead";
 			case MOONLIGHT_MEAD_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Moonlight Mead";
 			case MOONLIGHT_MEAD_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Moonlight Mead";
 			case AXEMANS_FOLLY_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Axeman's Folly";
 			case AXEMANS_FOLLY_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Axeman's Folly";
 			case AXEMANS_FOLLY_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Axeman's Folly";
 			case AXEMANS_FOLLY_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Axeman's Folly";
 			case AXEMANS_FOLLY_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Axeman's Folly";
 			case AXEMANS_FOLLY_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Axeman's Folly";
 			case AXEMANS_FOLLY_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Axeman's Folly";
 			case AXEMANS_FOLLY_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Axeman's Folly";
 			case CHEFS_DELIGHT_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Chef's Delight";
 			case CHEFS_DELIGHT_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Chef's Delight";
 			case CHEFS_DELIGHT_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Chef's Delight";
 			case CHEFS_DELIGHT_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Chef's Delight";
 			case CHEFS_DELIGHT_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Chef's Delight";
 			case CHEFS_DELIGHT_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Chef's Delight";
 			case CHEFS_DELIGHT_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Chef's Delight";
 			case CHEFS_DELIGHT_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Chef's Delight";
 			case SLAYERS_RESPITE_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Slayer's Respite";
 			case SLAYERS_RESPITE_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Slayer's Respite";
 			case SLAYERS_RESPITE_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Slayer's Respite";
 			case SLAYERS_RESPITE_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Slayer's Respite";
 			case SLAYERS_RESPITE_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Slayer's Respite";
 			case SLAYERS_RESPITE_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Slayer's Respite";
 			case SLAYERS_RESPITE_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Slayer's Respite";
 			case SLAYERS_RESPITE_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Slayer's Respite";
 			case CIDER_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Cider";
 			case CIDER_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Cider";
 			case CIDER_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Cider";
 			case CIDER_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Cider";
 			case CIDER_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Cider";
 			case CIDER_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Cider";
 			case CIDER_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Cider";
 			case CIDER_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Cider";
 			case MATURE_DWARVEN_STOUT_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Mature Dwarven Stout";
 			case MATURE_DWARVEN_STOUT_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Mature Dwarven Stout";
 			case MATURE_DWARVEN_STOUT_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Mature Dwarven Stout";
 			case MATURE_DWARVEN_STOUT_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Mature Dwarven Stout";
 			case MATURE_DWARVEN_STOUT_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Mature Dwarven Stout";
 			case MATURE_DWARVEN_STOUT_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Mature Dwarven Stout";
 			case MATURE_DWARVEN_STOUT_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Mature Dwarven Stout";
 			case MATURE_DWARVEN_STOUT_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Mature Dwarven Stout";
 			case MATURE_ASGARNIAN_ALE_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Mature Asgarnian Ale";
 			case MATURE_ASGARNIAN_ALE_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Mature Asgarnian Ale";
 			case MATURE_ASGARNIAN_ALE_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Mature Asgarnian Ale";
 			case MATURE_ASGARNIAN_ALE_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Mature Asgarnian Ale";
 			case MATURE_ASGARNIAN_ALE_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Mature Asgarnian Ale";
 			case MATURE_ASGARNIAN_ALE_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Mature Asgarnian Ale";
 			case MATURE_ASGARNIAN_ALE_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Mature Asgarnian Ale";
 			case MATURE_ASGARNIAN_ALE_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Mature Asgarnian Ale";
 			case MATURE_GREENMANS_ALE_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Mature Greenman's Ale";
 			case MATURE_GREENMANS_ALE_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Mature Greenman's Ale";
 			case MATURE_GREENMANS_ALE_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Mature Greenman's Ale";
 			case MATURE_GREENMANS_ALE_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Mature Greenman's Ale";
 			case MATURE_GREENMANS_ALE_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Mature Greenman's Ale";
 			case MATURE_GREENMANS_ALE_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Mature Greenman's Ale";
 			case MATURE_GREENMANS_ALE_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Mature Greenman's Ale";
 			case MATURE_GREENMANS_ALE_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Mature Greenman's Ale";
 			case MATURE_WIZARDS_MIND_BOMB_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Mature Wizard's Mind Bomb";
 			case MATURE_WIZARDS_MIND_BOMB_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Mature Wizard's Mind Bomb";
 			case MATURE_WIZARDS_MIND_BOMB_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Mature Wizard's Mind Bomb";
 			case MATURE_WIZARDS_MIND_BOMB_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Mature Wizard's Mind Bomb";
 			case MATURE_WIZARDS_MIND_BOMB_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Mature Wizard's Mind Bomb";
 			case MATURE_WIZARDS_MIND_BOMB_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Mature Wizard's Mind Bomb";
 			case MATURE_WIZARDS_MIND_BOMB_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Mature Wizard's Mind Bomb";
 			case MATURE_WIZARDS_MIND_BOMB_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Mature Wizard's Mind Bomb";
 			case MATURE_DRAGON_BITTER_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Mature Dragon Bitter";
 			case MATURE_DRAGON_BITTER_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Mature Dragon Bitter";
 			case MATURE_DRAGON_BITTER_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Mature Dragon Bitter";
 			case MATURE_DRAGON_BITTER_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Mature Dragon Bitter";
 			case MATURE_DRAGON_BITTER_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Mature Dragon Bitter";
 			case MATURE_DRAGON_BITTER_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Mature Dragon Bitter";
 			case MATURE_DRAGON_BITTER_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Mature Dragon Bitter";
 			case MATURE_DRAGON_BITTER_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Mature Dragon Bitter";
 			case MATURE_MOONLIGHT_MEAD_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Mature Moonlight Mead";
 			case MATURE_MOONLIGHT_MEAD_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Mature Moonlight Mead";
 			case MATURE_MOONLIGHT_MEAD_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Mature Moonlight Mead";
 			case MATURE_MOONLIGHT_MEAD_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Mature Moonlight Mead";
 			case MATURE_MOONLIGHT_MEAD_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Mature Moonlight Mead";
 			case MATURE_MOONLIGHT_MEAD_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Mature Moonlight Mead";
 			case MATURE_MOONLIGHT_MEAD_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Mature Moonlight Mead";
 			case MATURE_MOONLIGHT_MEAD_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Mature Moonlight Mead";
 			case MATURE_AXEMANS_FOLLY_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Mature Axeman's Folly";
 			case MATURE_AXEMANS_FOLLY_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Mature Axeman's Folly";
 			case MATURE_AXEMANS_FOLLY_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Mature Axeman's Folly";
 			case MATURE_AXEMANS_FOLLY_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Mature Axeman's Folly";
 			case MATURE_AXEMANS_FOLLY_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Mature Axeman's Folly";
 			case MATURE_AXEMANS_FOLLY_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Mature Axeman's Folly";
 			case MATURE_AXEMANS_FOLLY_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Mature Axeman's Folly";
 			case MATURE_AXEMANS_FOLLY_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Mature Axeman's Folly";
 			case MATURE_CHEFS_DELIGHT_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Mature Chef's Delight";
 			case MATURE_CHEFS_DELIGHT_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Mature Chef's Delight";
 			case MATURE_CHEFS_DELIGHT_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Mature Chef's Delight";
 			case MATURE_CHEFS_DELIGHT_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Mature Chef's Delight";
 			case MATURE_CHEFS_DELIGHT_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Mature Chef's Delight";
 			case MATURE_CHEFS_DELIGHT_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Mature Chef's Delight";
 			case MATURE_CHEFS_DELIGHT_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Mature Chef's Delight";
 			case MATURE_CHEFS_DELIGHT_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Mature Chef's Delight";
 			case MATURE_SLAYERS_RESPITE_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Mature Slayer's Respite";
 			case MATURE_SLAYERS_RESPITE_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Mature Slayer's Respite";
 			case MATURE_SLAYERS_RESPITE_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Mature Slayer's Respite";
 			case MATURE_SLAYERS_RESPITE_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Mature Slayer's Respite";
 			case MATURE_SLAYERS_RESPITE_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Mature Slayer's Respite";
 			case MATURE_SLAYERS_RESPITE_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Mature Slayer's Respite";
 			case MATURE_SLAYERS_RESPITE_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Mature Slayer's Respite";
 			case MATURE_SLAYERS_RESPITE_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Mature Slayer's Respite";
 			case MATURE_CIDER_8_PINTS:
-				return "8 Pints: ";
+				return "8 Pints: Mature Mature Cider";
 			case MATURE_CIDER_7_PINTS:
-				return "7 Pints: ";
+				return "7 Pints: Mature Mature Cider";
 			case MATURE_CIDER_6_PINTS:
-				return "6 Pints: ";
+				return "6 Pints: Mature Mature Cider";
 			case MATURE_CIDER_5_PINTS:
-				return "5 Pints: ";
+				return "5 Pints: Mature Mature Cider";
 			case MATURE_CIDER_4_PINTS:
-				return "4 Pints: ";
+				return "4 Pints: Mature Mature Cider";
 			case MATURE_CIDER_3_PINTS:
-				return "3 Pints: ";
+				return "3 Pints: Mature Mature Cider";
 			case MATURE_CIDER_2_PINTS:
-				return "2 Pints: ";
+				return "2 Pints: Mature Mature Cider";
 			case MATURE_CIDER_1_PINT:
-				return "1 Pint: ";
+				return "1 Pint: Mature Mature Cider";
 
 			case UNKNOWN:
 				return "Unknown";

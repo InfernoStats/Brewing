@@ -49,9 +49,9 @@ public class BrewingPlugin extends Plugin {
 
 	private boolean infoboxInit = false;
 
-	private static final BufferedImage VAT_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "./vat.png");
-	private static final BufferedImage BARREL_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "./barrel.png");
-	private static final BufferedImage THE_STUFF_VAT_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "./vat_stuff.png");
+	private static final BufferedImage VAT_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "/com/brewing/vat.png");
+	private static final BufferedImage BARREL_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "/com/brewing/barrel.png");
+	private static final BufferedImage THE_STUFF_VAT_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "/com/brewing/vat_stuff.png");
 
 	@Provides
 	BrewingConfig provideConfig(ConfigManager configManager) {

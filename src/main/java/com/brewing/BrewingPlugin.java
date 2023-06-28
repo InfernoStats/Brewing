@@ -4,10 +4,17 @@ import com.google.inject.Provides;
 import java.awt.image.BufferedImage;
 import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
+import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
+import net.runelite.api.GameState;
+import net.runelite.api.events.GameStateChanged;
 import net.runelite.api.events.GameTick;
 import net.runelite.api.events.VarbitChanged;
 import net.runelite.client.Notifier;
+import net.runelite.client.chat.ChatColorType;
+import net.runelite.client.chat.ChatMessageBuilder;
+import net.runelite.client.chat.ChatMessageManager;
+import net.runelite.client.chat.QueuedMessage;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
@@ -23,8 +30,6 @@ import net.runelite.client.util.ImageUtil;
 		tags = {"cooking", "skilling", "overlay"}
 )
 public class BrewingPlugin extends Plugin {
-	private static final String CONFIG_GROUP = "BrewingConfig";
-
 	@Inject
 	private Client client;
 
@@ -33,6 +38,9 @@ public class BrewingPlugin extends Plugin {
 
 	@Inject
 	private Notifier notifier;
+
+	@Inject
+	private ChatMessageManager chatMessageManager;
 
 	@Inject
 	private BrewingConfig config;
@@ -47,7 +55,7 @@ public class BrewingPlugin extends Plugin {
 	private static final int PORT_PHASMATYS_STUFF_VARBIT = 2295;
 	private static final int PORT_PHASMATYS_BARREL_VARBIT = 739;
 
-	private boolean infoboxInit = false;
+	private boolean infoboxInit;
 
 	private static final BufferedImage VAT_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "/com/brewing/vat.png");
 	private static final BufferedImage BARREL_IMAGE = ImageUtil.loadImageResource(BrewingPlugin.class, "/com/brewing/barrel.png");
@@ -59,18 +67,21 @@ public class BrewingPlugin extends Plugin {
 	}
 
 	@Override
-	protected void startUp() throws Exception {
+	protected void startUp()
+	{
+		infoboxInit = false;
 	}
 
 	@Override
-	protected void shutDown() throws Exception {
+	protected void shutDown()
+	{
 		removeInfoBoxes();
 		infoboxInit = false;
 	}
 
 	@Subscribe
 	public void onConfigChanged(ConfigChanged e) {
-		if (!e.getGroup().equals(CONFIG_GROUP)) {
+		if (!e.getGroup().equals(BrewingConfig.GROUP)) {
 			return;
 		}
 		infoboxInit = false;
@@ -80,30 +91,38 @@ public class BrewingPlugin extends Plugin {
 	public void onVarbitChanged(VarbitChanged varbitChanged) {
 		int var = varbitChanged.getVarbitId();
 
-		if(config.notifyOnCompletion() &&
-				(var == KELDAGRIM_VAT_VARBIT || var == PORT_PHASMATYS_VAT_VARBIT) &&
-				(BrewingVatState.isCompletedNormal(varbitChanged.getValue()) || BrewingVatState.isCompletedMature(varbitChanged.getValue())))
+		if ((var == KELDAGRIM_VAT_VARBIT || var == PORT_PHASMATYS_VAT_VARBIT) &&
+				(BrewingVatState.isCompletedNormal(varbitChanged.getValue()) ||
+				 BrewingVatState.isCompletedMature(varbitChanged.getValue())))
 		{
-			notifier.notify(BrewingVatState.toString(varbitChanged.getValue()) + " completed in the " + (var == KELDAGRIM_VAT_VARBIT ? "Keldagrim" : "Port Phasmatys") + " vat.");
+			if (config.notifyOnCompletion())
+			{
+				notifier.notify(
+					"You have "
+						+ BrewingVatState.toString(varbitChanged.getValue())
+						+ " waiting to be collected in the "
+						+ (var == KELDAGRIM_VAT_VARBIT ? "Keldagrim" : "Port Phasmatys")
+						+ " vat."
+				);
+			}
+
+			if (config.chatMessageOnCompletion())
+			{
+				sendChatMessage(
+					"You have "
+						+ BrewingVatState.toString(varbitChanged.getValue())
+						+ " waiting to be collected in the "
+						+ (var == KELDAGRIM_VAT_VARBIT ? "Keldagrim" : "Port Phasmatys")
+						+ " vat."
+				);
+			}
 		}
 
-		if(var == KELDAGRIM_VAT_VARBIT || var == PORT_PHASMATYS_VAT_VARBIT ||
+		if (var == KELDAGRIM_VAT_VARBIT || var == PORT_PHASMATYS_VAT_VARBIT ||
 				var == KELDAGRIM_STUFF_VARBIT || var == PORT_PHASMATYS_STUFF_VARBIT ||
 				var == KELDAGRIM_BARREL_VARBIT || var == PORT_PHASMATYS_BARREL_VARBIT) {
 			removeInfoBoxes();
 			addInfoBoxes();
-		}
-
-	}
-
-	@Subscribe
-	public void onGameTick(GameTick gameTick)
-	{
-		if(!infoboxInit)
-		{
-			removeInfoBoxes();
-			addInfoBoxes();
-			infoboxInit = true;
 		}
 	}
 
@@ -121,5 +140,19 @@ public class BrewingPlugin extends Plugin {
 	private void removeInfoBoxes()
 	{
 		infoBoxManager.removeIf(t -> t instanceof BrewingVat || t instanceof BrewingBarrel);
+	}
+
+	private void sendChatMessage(String chatMessage)
+	{
+		final String message = new ChatMessageBuilder()
+			.append(ChatColorType.HIGHLIGHT)
+			.append(chatMessage)
+			.build();
+
+		chatMessageManager.queue(
+			QueuedMessage.builder()
+				.type(ChatMessageType.CONSOLE)
+				.runeLiteFormattedMessage(message)
+				.build());
 	}
 }

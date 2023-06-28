@@ -4,8 +4,9 @@ import net.runelite.client.config.Config;
 import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 
-@ConfigGroup("BrewingConfig")
+@ConfigGroup(BrewingConfig.GROUP)
 public interface BrewingConfig extends Config {
+	String GROUP = "BrewingConfig";
 
 	enum DisplayMode {
 		KELDAGRIM,
@@ -72,6 +73,16 @@ public interface BrewingConfig extends Config {
 		position = 5
 	)
 	default boolean notifyOnCompletion() {
+		return false;
+	}
+
+	@ConfigItem(
+		keyName = "chatMessage",
+		name = "Chat Message On Completion",
+		description = "Show a message when you can collect your brews.",
+		position = 6
+	)
+	default boolean chatMessageOnCompletion() {
 		return false;
 	}
 }

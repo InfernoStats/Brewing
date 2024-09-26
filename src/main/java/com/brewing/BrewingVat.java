@@ -64,7 +64,7 @@ public class BrewingVat extends InfoBox
 
 	private boolean canDisplayVat()
 	{
-		if(config.displayVats() == BrewingConfig.DisplayMode.BOTH)
+		if(config.displayVats() == BrewingConfig.DisplayMode.ALL)
 		{
 			return true;
 		}
@@ -73,6 +73,10 @@ public class BrewingVat extends InfoBox
 			return true;
 		}
 		else if(location == plugin.PORT_PHASMATYS_NAME && config.displayVats() == BrewingConfig.DisplayMode.PORT_PHASMATYS)
+		{
+			return true;
+		}
+		else if(location == plugin.ALDARIN_NAME && config.displayVats() == BrewingConfig.DisplayMode.ALDARIN)
 		{
 			return true;
 		}

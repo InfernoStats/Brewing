@@ -11,7 +11,8 @@ public interface BrewingConfig extends Config {
 	enum DisplayMode {
 		KELDAGRIM,
 		PORT_PHASMATYS,
-		BOTH
+		ALDARIN,
+		ALL
 	}
 
 	enum VatState {
@@ -33,7 +34,7 @@ public interface BrewingConfig extends Config {
 		position = 1
 	)
 	default DisplayMode displayVats() {
-		return DisplayMode.BOTH;
+		return DisplayMode.ALL;
 	}
 
 	@ConfigItem(
@@ -53,7 +54,7 @@ public interface BrewingConfig extends Config {
 		position = 3
 	)
 	default DisplayMode displayBarrels() {
-		return DisplayMode.BOTH;
+		return DisplayMode.ALL;
 	}
 
 	@ConfigItem(

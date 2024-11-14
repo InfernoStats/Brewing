@@ -64,15 +64,19 @@ public class BrewingVat extends InfoBox
 
 	private boolean canDisplayVat()
 	{
-		if(config.displayVats() == BrewingConfig.DisplayMode.BOTH)
+		if(config.displayVats() == BrewingConfig.DisplayMode.NONE)
+		{
+			return false;
+		}
+		else if(config.displayVats() == BrewingConfig.DisplayMode.BOTH)
 		{
 			return true;
 		}
-		else if(location == plugin.KELDAGRIM_NAME && config.displayVats() == BrewingConfig.DisplayMode.KELDAGRIM)
+		else if(location.equals(plugin.KELDAGRIM_NAME) && config.displayVats() == BrewingConfig.DisplayMode.KELDAGRIM)
 		{
 			return true;
 		}
-		else if(location == plugin.PORT_PHASMATYS_NAME && config.displayVats() == BrewingConfig.DisplayMode.PORT_PHASMATYS)
+		else if(location.equals(plugin.PORT_PHASMATYS_NAME) && config.displayVats() == BrewingConfig.DisplayMode.PORT_PHASMATYS)
 		{
 			return true;
 		}

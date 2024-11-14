@@ -11,7 +11,8 @@ public interface BrewingConfig extends Config {
 	enum DisplayMode {
 		KELDAGRIM,
 		PORT_PHASMATYS,
-		BOTH
+		BOTH,
+		NONE
 	}
 
 	enum VatState {

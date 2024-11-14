@@ -277,7 +277,7 @@ public enum BrewingVatState {
 			case CHEFS_DELIGHT:
 				return "Chef's Delight";
 			case MATURE_CHEFS_DELIGHT:
-				return "Chef's Delight";
+				return "Mature Chef's Delight";
 
 			/* Slayer's Respite */
 			case WILDBLOOD_HOPS:

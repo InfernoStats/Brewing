@@ -59,7 +59,7 @@ public class BrewingBarrel extends InfoBox
 	}
 
 	private boolean canDisplayBarrel() {
-		if (config.displayBarrels() == BrewingConfig.DisplayMode.BOTH)
+		if (config.displayBarrels() == BrewingConfig.DisplayMode.ALL)
 		{
 			return true;
 		}
@@ -68,6 +68,10 @@ public class BrewingBarrel extends InfoBox
 			return true;
 		}
 		else if (location == plugin.PORT_PHASMATYS_NAME && config.displayBarrels() == BrewingConfig.DisplayMode.PORT_PHASMATYS)
+		{
+			return true;
+		}
+		else if (location == plugin.ALDARIN_NAME && config.displayBarrels() == BrewingConfig.DisplayMode.ALDARIN)
 		{
 			return true;
 		}

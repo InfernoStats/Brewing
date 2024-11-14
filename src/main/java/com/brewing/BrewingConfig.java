@@ -12,7 +12,8 @@ public interface BrewingConfig extends Config {
 		KELDAGRIM,
 		PORT_PHASMATYS,
 		ALDARIN,
-		ALL
+		ALL,
+		NONE
 	}
 
 	enum VatState {
